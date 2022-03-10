@@ -2,46 +2,44 @@ package BST;
 
 import java.lang.Math;
 
-public class TreeNode<T extends Comparable<T>> {
-    private TreeNode<T> parent;
-    private TreeNode<T> left;
-    private TreeNode<T> right;
-    private int height = 0;
-    private T val;
+public class BSTNode<T extends Comparable<T>> {
+    protected BSTNode<T> parent = null;
+    protected BSTNode<T> left = null;
+    protected BSTNode<T> right = null;
+    protected BSTNodeFactory<T> factory;
+    protected int height = 0;
+    protected T val;
 
-    public TreeNode(T val) {
+    public BSTNode(T val) {
         this.val = val;
-        parent = null;
-        left = null;
-        right = null;
     }
 
-    public TreeNode(TreeNode<T> parent, T val) {
+    public BSTNode(BSTNode<T> parent, T val) {
         this.val = val;
         this.parent = parent;
     }
 
-    public TreeNode<T> getParent() {
+    public BSTNode<T> getParent() {
         return parent;
     }
 
-    public void setParent(TreeNode<T> parent) {
+    public void setParent(BSTNode<T> parent) {
         this.parent = parent;
     }
 
-    public TreeNode<T> getLeft() {
+    public BSTNode<T> getLeft() {
         return left;
     }
 
-    public void setLeft(TreeNode<T> left) {
+    public void setLeft(BSTNode<T> left) {
         this.left = left;
     }
 
-    public TreeNode<T> getRight() {
+    public BSTNode<T> getRight() {
         return right;
     }
 
-    public void setRight(TreeNode<T> right) {
+    public void setRight(BSTNode<T> right) {
         this.right = right;
     }
 
@@ -106,7 +104,7 @@ public class TreeNode<T extends Comparable<T>> {
                 this.postInsertHook();
                 return;
             }
-            this.left = new TreeNode<T>(this, obj);
+            this.left = this.factory.getNode(this, obj);
             this.calcHeight();
             this.postInsertHook();
             return;
@@ -117,7 +115,7 @@ public class TreeNode<T extends Comparable<T>> {
             this.postInsertHook();
             return;
         }
-        this.right = new TreeNode<T>(this, obj);
+        this.right = this.factory.getNode(this, obj);
         this.calcHeight();
         this.postInsertHook();
     }
@@ -147,7 +145,7 @@ public class TreeNode<T extends Comparable<T>> {
                 this.left.parent = null;
                 this.left = null;
             } else {
-                TreeNode<T> temp = this.left;
+                BSTNode<T> temp = this.left;
                 while(temp.right != null) {
                     temp = temp.right;
                 }
@@ -159,5 +157,11 @@ public class TreeNode<T extends Comparable<T>> {
         } else {
             this.right.delete(obj);
         }
+        this.calcHeight();
+        this.postDeleteHook();
+    }
+
+    protected void postDeleteHook() {
+        return;
     }
 }

@@ -1,17 +1,17 @@
 package BST;
 
 public class BST<T extends Comparable<T>> {
-    private TreeNode<T> root;
+    private BSTNode<T> root;
 
     public BST() {
         this.root = null;
     }
 
-    public TreeNode<T> getRoot() {
+    public BSTNode<T> getRoot() {
         return root;
     }
 
-    public void setRoot(TreeNode<T> root) {
+    public void setRoot(BSTNode<T> root) {
         this.root = root;
     }
 
