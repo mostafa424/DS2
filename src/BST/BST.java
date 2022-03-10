@@ -15,6 +15,10 @@ public class BST<T extends Comparable<T>> {
         this.root = root;
     }
 
+    public int getHeight() {
+        return this.root.getHeight();
+    }
+
     public boolean search(T val) {
         return this.root.search(val);
     }
