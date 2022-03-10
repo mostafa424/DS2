@@ -71,7 +71,7 @@ public class BSTNode<T extends Comparable<T>> {
         this.height = 0;
     }
 
-    protected boolean search(T comp) {
+    public boolean search(T comp) {
         if(comp == null) {
             return true;
         }
@@ -90,7 +90,7 @@ public class BSTNode<T extends Comparable<T>> {
         return false;
     }
 
-    protected void insert(T obj) {
+    public void insert(T obj) {
         if(this.val == null) {
             this.val = obj;
             this.calcHeight();
@@ -124,7 +124,7 @@ public class BSTNode<T extends Comparable<T>> {
         return;
     }
 
-    protected void delete(T obj) {
+    public void delete(T obj) {
         if(obj.compareTo(this.val) == 0){
             if(this.left == null && this.right == null) {
                 if(this.parent == null) {
