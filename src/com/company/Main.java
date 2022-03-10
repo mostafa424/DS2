@@ -5,9 +5,9 @@ import BST.TreeNode;
 public class Main {
     public static void traverse(TreeNode test){
         if(test==null){return;}
-        traverse(test.getLeftNode());
-        System.out.print(test.getKey()+" ");
-        traverse(test.getRightNode());
+        traverse(test.getLeft());
+        System.out.print(test.getVal()+" ");
+        traverse(test.getRight());
     }
     public static void main(String[] args) {
 	BST test=new BST();
