@@ -55,7 +55,7 @@ public class BSTNode<T extends Comparable<T>> {
         this.val = val;
     }
 
-    private void calcHeight() {
+    public void calcHeight() {
         if(this.left != null) {
             if(this.right != null) {
                 this.height = Math.max(this.left.getHeight(), this.right.getHeight()) + 1;
@@ -93,35 +93,30 @@ public class BSTNode<T extends Comparable<T>> {
     public void insert(T obj) {
         if(this.val == null) {
             this.val = obj;
-            this.calcHeight();
             this.postInsertHook();
             return;
         }
         if(obj.compareTo(this.val) <= 0) {
             if(this.left != null) {
                 this.left.insert(obj);
-                this.calcHeight();
                 this.postInsertHook();
                 return;
             }
             this.left = this.factory.getNode(this, obj);
-            this.calcHeight();
             this.postInsertHook();
             return;
         }
         if(this.right != null) {
             this.right.insert(obj);
-            this.calcHeight();
             this.postInsertHook();
             return;
         }
         this.right = this.factory.getNode(this, obj);
-        this.calcHeight();
         this.postInsertHook();
     }
 
     protected void postInsertHook() {
-        return;
+        this.calcHeight();
     }
 
     public void delete(T obj) {
@@ -157,11 +152,10 @@ public class BSTNode<T extends Comparable<T>> {
         } else {
             this.right.delete(obj);
         }
-        this.calcHeight();
         this.postDeleteHook();
     }
 
     protected void postDeleteHook() {
-        return;
+        this.calcHeight();
     }
 }
