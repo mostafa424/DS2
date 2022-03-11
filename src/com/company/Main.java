@@ -19,6 +19,10 @@ public class Main {
         test.insert(5);
         test.insert(3);
         test.insert(4);
+        test.insert(11);
+        test.insert(15);
+        test.insert(20);
+        test.insert(50);
         /**/
         System.out.println(test.search(5));
         System.out.println(test.search(11));
