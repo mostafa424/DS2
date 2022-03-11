@@ -70,18 +70,30 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
             int leftBal = calcBalance(this.left);
             if(leftBal == 1) {
                 rotateRight(this.left);
+                this.calcHeight();
+                this.parent.calcHeight();
             } else if(leftBal == -1) {
                 rotateLeft(this.left.getRight());
                 rotateRight(this.left);
+                this.calcHeight();
+                this.parent.getLeft().calcHeight();
+                this.parent.calcHeight();
             }
         } else if(balance < -1) {
             int rightBal = calcBalance(this.right);
             if(rightBal == -1) {
                 rotateLeft(this.right);
+                this.calcHeight();
+                this.parent.calcHeight();
             } else if(rightBal == 1) {
                 rotateRight(this.right.getLeft());
                 rotateLeft(this.right);
+                this.calcHeight();
+                this.parent.getRight().calcHeight();
+                this.parent.calcHeight();
             }
+        } else {
+            this.calcHeight();
         }
     }
 
