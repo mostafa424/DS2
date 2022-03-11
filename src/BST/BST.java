@@ -1,8 +1,8 @@
 package BST;
-import BSTNode;
+import BST.BSTNode;
 import java.lang.Math;
-public class BST {
-   private TreeNode root;
+public class BST<T extends Comparable<T>> {
+   private BSTNode<T> root;
    private int height;
     public BST() {
         this.root = new BSTNode<T>(null);
