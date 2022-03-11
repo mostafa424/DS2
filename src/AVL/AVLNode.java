@@ -15,6 +15,13 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
     }
 
     private static <T extends Comparable<T>> void rotateLeft(BSTNode<T> node) {
+        if(node.getParent().getParent() != null) {
+            if(node.getParent() == node.getParent().getParent().getLeft()) {
+                node.getParent().getParent().setLeft(node);
+            } else {
+                node.getParent().getParent().setRight(node);
+            }
+        }
         node.getParent().setRight(node.getLeft());
         if(node.getLeft() != null) {
             node.getLeft().setParent(node.getParent());
@@ -26,6 +33,13 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
     }
 
     private static <T extends Comparable<T>> void rotateRight(BSTNode<T> node) {
+        if(node.getParent().getParent() != null) {
+            if(node.getParent() == node.getParent().getParent().getLeft()) {
+                node.getParent().getParent().setLeft(node);
+            } else {
+                node.getParent().getParent().setRight(node);
+            }
+        }
         node.getParent().setLeft(node.getRight());
         if(node.getRight() != null) {
             node.getRight().setParent(node.getParent());
