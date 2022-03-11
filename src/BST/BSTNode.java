@@ -55,7 +55,7 @@ public class BSTNode<T extends Comparable<T>> {
         this.val = val;
     }
 
-    private void calcHeight() {
+    public void calcHeight() {
         if(this.left != null) {
             if(this.right != null) {
                 this.height = Math.max(this.left.getHeight(), this.right.getHeight()) + 1;
@@ -121,7 +121,7 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     protected void postInsertHook() {
-        return;
+        this.calcHeight();
     }
 
     public void delete(T obj) {
@@ -162,6 +162,6 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     protected void postDeleteHook() {
-        return;
+        this.calcHeight();
     }
 }

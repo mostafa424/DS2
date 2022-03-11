@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Dictionary {
@@ -43,7 +44,7 @@ public class Dictionary {
             List<String> words = readFile(path);
             for (String word : words) {
                 this.size++;
-                this.tree.insert(word);
+                this.tree.insert(word.toLowerCase(Locale.ROOT));
             }
         } catch (FileNotFoundException e) {
             System.out.println("No file found.");
@@ -55,8 +56,8 @@ public class Dictionary {
     }
 
     public void insert(String word) {
-        if(!tree.search(word)) {
-            this.tree.insert(word);
+        if(!tree.search(word.toLowerCase(Locale.ROOT))) {
+            this.tree.insert(word.toLowerCase(Locale.ROOT));
             this.size++;
         } else {
             System.out.println("Word already exists.");
@@ -64,12 +65,12 @@ public class Dictionary {
     }
 
     public boolean find(String word) {
-        return this.tree.search(word);
+        return this.tree.search(word.toLowerCase(Locale.ROOT));
     }
 
     public void delete(String word) {
-        if(tree.search(word)) {
-            this.tree.delete(word);
+        if(tree.search(word.toLowerCase(Locale.ROOT))) {
+            this.tree.delete(word.toLowerCase(Locale.ROOT));
             this.size--;
         } else {
             System.out.println("No such word found.");
@@ -82,7 +83,7 @@ public class Dictionary {
         try {
             strs = readFile(path);
             for(String str : strs) {
-                res.add(Boolean.parseBoolean(str));
+                res.add(this.find(str));
             }
         } catch (FileNotFoundException e) {
             System.out.println("No file found.");
