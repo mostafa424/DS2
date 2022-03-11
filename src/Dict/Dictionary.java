@@ -13,6 +13,10 @@ public class Dictionary {
     private AVL<String> tree;
     private int size;
 
+    public Dictionary() {
+        this.tree = new AVL<String>();
+    }
+
     public AVL<String> getTree() {
         return tree;
     }
