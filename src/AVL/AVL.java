@@ -4,7 +4,7 @@ public class AVL<T extends Comparable<T>> {
     private AVLNode<T> root;
 
     public AVL() {
-        this.root = null;
+        this.root = new AVLNode<T>(null);
     }
 
     public AVLNode<T> getRoot() {

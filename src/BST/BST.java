@@ -4,7 +4,7 @@ public class BST<T extends Comparable<T>> {
     private BSTNode<T> root;
 
     public BST() {
-        this.root = null;
+        this.root = new BSTNode<T>(null);
     }
 
     public BSTNode<T> getRoot() {
