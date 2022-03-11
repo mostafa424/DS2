@@ -3,6 +3,14 @@ package AVL;
 public class AVL<T extends Comparable<T>> {
     private AVLNode<T> root;
 
+    private void findRoot() {
+        AVLNode<T> temp = root;
+        while(temp.getParent() != null) {
+            temp = (AVLNode<T>) temp.getParent();
+        }
+        this.root = temp;
+    }
+
     public AVL() {
         this.root = new AVLNode<T>(null);
     }
@@ -25,6 +33,7 @@ public class AVL<T extends Comparable<T>> {
 
     public void insert(T obj) {
         this.root.insert(obj);
+        findRoot();
     }
 
     public void delete(T obj) {
@@ -32,5 +41,6 @@ public class AVL<T extends Comparable<T>> {
             return;
         }
         this.root.delete(obj);
+        findRoot();
     }
 }
