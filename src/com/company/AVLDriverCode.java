@@ -3,6 +3,7 @@ package com.company;
 import AVL.AVL;
 import Dict.Dictionary;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AVLDriverCode {
@@ -19,13 +20,14 @@ public class AVLDriverCode {
                     System.out.println("1:search");
                     System.out.println("2:insert");
                     System.out.println("3:delete");
-                    System.out.println("4:exit");
+                    System.out.println("4:Print Height");
+                    System.out.println("5:exit");
                     int option = sc.nextInt();
                     switch(option){
                         case 1:
                             System.out.print("Enter search number: ");
                             int search = sc.nextInt();
-                            System.out.print(test.search(search));
+                            System.out.println(test.search(search));
                             break;
 
                         case 2:
@@ -40,8 +42,9 @@ public class AVLDriverCode {
                             test.delete(deletedNumber);
                             System.out.println("Operation Successful");
                             break;
+                        case 4: System.out.println(test.getHeight());
                     }
-                    if(option == 4){break;}
+                    if(option == 5){System.out.println("Exiting....");break;}
                 }
                 break;
             case 2:
@@ -55,13 +58,15 @@ public class AVLDriverCode {
                     System.out.println("1:Find");
                     System.out.println("2:Insert contact");
                     System.out.println("3:delete Contact");
-                    System.out.println("4:exit");
+                    System.out.println("4:Find by Batch");
+                    System.out.println("5:delete by Batch");
+                    System.out.println("6:exit");
                     int option = sc.nextInt();
                     switch(option){
                         case 1:
                             System.out.print("Enter search Contact: ");
                             String search = sc.next();
-                            System.out.print(test2.find(search));
+                            System.out.println(test2.find(search));
                             break;
 
                         case 2:
@@ -76,8 +81,18 @@ public class AVLDriverCode {
                             test2.delete(deletedContact);
                             System.out.println("Operation Successful");
                             break;
+                        case 4:
+                            System.out.println("Enter Absolute Path of Queries");
+                            String q_path=sc.next();
+                            System.out.println(Arrays.toString(test2.batchFind(q_path).toArray()));
+                            break;
+                        case 5:
+                            System.out.println("Enter Absolute Path of Deletions");
+                            String d_path=sc.next();
+                            test2.batchDel(d_path);
+                            break;
                     }
-                    if(option == 4){break;}
+                    if(option == 6){System.out.println("Exiting....");break;}
                 }
                 break;
             case 3:
