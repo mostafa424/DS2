@@ -1,13 +1,13 @@
 package com.company;
 import BST.BST;
-import BST.TreeNode;
+import BST.BSTNode;
 
 public class Main {
-    public static void traverse(TreeNode test){
+    public static void traverse(BSTNode test){
         if(test==null){return;}
-        traverse(test.getLeftNode());
-        System.out.print(test.getKey()+" ");
-        traverse(test.getRightNode());
+        traverse(test.getLeft());
+        System.out.print(test.getVal()+" ");
+        traverse(test.getRight());
     }
     public static void main(String[] args) {
 	BST test=new BST();

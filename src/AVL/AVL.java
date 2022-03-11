@@ -1,17 +1,17 @@
-package BST;
+package AVL;
 
-public class BST<T extends Comparable<T>> {
-    private BSTNode<T> root;
+public class AVL<T extends Comparable<T>> {
+    private AVLNode<T> root;
 
-    public BST() {
-        this.root = new BSTNode<T>(null);
+    public AVL() {
+        this.root = new AVLNode<T>(null);
     }
 
-    public BSTNode<T> getRoot() {
+    public AVLNode<T> getRoot() {
         return root;
     }
 
-    public void setRoot(BSTNode<T> root) {
+    public void setRoot(AVLNode<T> root) {
         this.root = root;
     }
 
@@ -33,5 +33,4 @@ public class BST<T extends Comparable<T>> {
         }
         this.root.delete(obj);
     }
-
 }
