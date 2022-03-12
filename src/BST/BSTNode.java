@@ -2,18 +2,52 @@ package BST;
 
 import java.lang.Math;
 
+/**
+ * BST Node implementation.
+ *
+ * @param <T> Type of data stored in node, must implement Comparable interface.
+ */
 public class BSTNode<T extends Comparable<T>> {
+    /**
+     * Reference to parent node.
+     */
     protected BSTNode<T> parent = null;
+    /**
+     * Reference to left child node.
+     */
     protected BSTNode<T> left = null;
+    /**
+     * Reference to right child node.
+     */
     protected BSTNode<T> right = null;
+    /**
+     * Factory object to create new nodes for insertion.
+     */
     protected BSTNodeFactory<T> factory;
+    /**
+     * Height of tree rooted at node.
+     */
     protected int height = 0;
+    /**
+     * Value stored in node.
+     */
     protected T val;
 
+    /**
+     * Default constructor, initializes node with value.
+     *
+     * @param val value to be stored in node.
+     */
     public BSTNode(T val) {
         this.val = val;
     }
 
+    /**
+     * Constructor which initializes node with parent reference and value.
+     *
+     * @param parent Node parent reference.
+     * @param val value to be stored in node.
+     */
     public BSTNode(BSTNode<T> parent, T val) {
         this.val = val;
         this.parent = parent;
