@@ -68,7 +68,7 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
         int balance = calcBalance(this);
         if(balance > 1) {
             int leftBal = calcBalance(this.left);
-            if(leftBal == 1) {
+            if(leftBal == 1 || leftBal == 0) {
                 rotateRight(this.left);
                 this.calcHeight();
                 this.parent.calcHeight();
@@ -81,7 +81,7 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
             }
         } else if(balance < -1) {
             int rightBal = calcBalance(this.right);
-            if(rightBal == -1) {
+            if(rightBal == -1 || rightBal == 0) {
                 rotateLeft(this.right);
                 this.calcHeight();
                 this.parent.calcHeight();

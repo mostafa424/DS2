@@ -34,7 +34,7 @@ public class Dictionary {
         List<String> res = new ArrayList<>();
         Scanner fileScan = new Scanner(file);
         while(fileScan.hasNext()) {
-            res.add(fileScan.nextLine());
+            res.add(fileScan.nextLine().strip());
         }
         return res;
     }
