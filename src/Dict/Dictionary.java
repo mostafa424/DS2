@@ -14,7 +14,7 @@ public class Dictionary {
     private int size;
 
     public Dictionary() {
-        this.tree=new AVL<String>();
+        setTree(new AVL<String>());
     }
 
     public AVL<String> getTree() {

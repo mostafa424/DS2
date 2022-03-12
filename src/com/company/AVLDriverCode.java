@@ -56,27 +56,28 @@ public class AVLDriverCode {
                 while(true){
                     System.out.println("Select the operation you want to perform by pressing the respective number: ");
                     System.out.println("1:Find");
-                    System.out.println("2:Insert contact");
-                    System.out.println("3:delete Contact");
+                    System.out.println("2:Insert word");
+                    System.out.println("3:delete word");
                     System.out.println("4:Find by Batch");
                     System.out.println("5:delete by Batch");
-                    System.out.println("6:exit");
+                    System.out.println("6:size of Dictionary");
+                    System.out.println("7:exit");
                     int option = sc.nextInt();
                     switch(option){
                         case 1:
-                            System.out.print("Enter search Contact: ");
+                            System.out.print("Enter search word: ");
                             String search = sc.next();
                             System.out.println(test2.find(search));
                             break;
 
                         case 2:
-                            System.out.print("Enter number to be inserted: ");
+                            System.out.print("Enter word to be inserted: ");
                             String Contact = sc.next();
                             test2.insert(Contact);
                             System.out.println("Operation Successful");
                             break;
                         case 3:
-                            System.out.print("Enter number to be deleted: ");
+                            System.out.print("Enter word to be deleted: ");
                             String deletedContact = sc.next();
                             test2.delete(deletedContact);
                             System.out.println("Operation Successful");
@@ -91,8 +92,9 @@ public class AVLDriverCode {
                             String d_path=sc.next();
                             test2.batchDel(d_path);
                             break;
+                        case 6: System.out.println(test2.getSize());
                     }
-                    if(option == 6){System.out.println("Exiting....");break;}
+                    if(option == 7){System.out.println("Exiting....");break;}
                 }
                 break;
             case 3:
