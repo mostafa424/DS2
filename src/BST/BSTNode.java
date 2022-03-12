@@ -53,42 +53,84 @@ public class BSTNode<T extends Comparable<T>> {
         this.parent = parent;
     }
 
+    /**
+     * Parent node reference getter.
+     * @return reference to parent node.
+     */
     public BSTNode<T> getParent() {
         return parent;
     }
 
+    /**
+     * Parent node reference setter.
+     *
+     * @param parent reference to overwrite parent node reference
+     */
     public void setParent(BSTNode<T> parent) {
         this.parent = parent;
     }
 
+    /**
+     * Left child node reference getter.
+     * @return reference to left child node.
+     */
     public BSTNode<T> getLeft() {
         return left;
     }
 
+    /**
+     * Left child node reference setter.
+     *
+     * @param left reference to overwrite left child node reference
+     */
     public void setLeft(BSTNode<T> left) {
         this.left = left;
     }
 
+    /**
+     * Right child node reference getter.
+     * @return reference to right child node.
+     */
     public BSTNode<T> getRight() {
         return right;
     }
 
+    /**
+     * Right child node reference setter.
+     *
+     * @param right reference to overwrite right child node reference
+     */
     public void setRight(BSTNode<T> right) {
         this.right = right;
     }
 
+    /**
+     * Height getter.
+     * @return height of tree rooted at node.
+     */
     public int getHeight() {
         return this.height;
     }
 
+    /**
+     * Value getter.
+     * @return value stored in node.
+     */
     public T getVal() {
         return val;
     }
 
+    /**
+     * Value setter.
+     * @param val value to overwrite node contents.
+     */
     public void setVal(T val) {
         this.val = val;
     }
 
+    /**
+     * Method to calculate height of tree rooted at node.
+     */
     public void calcHeight() {
         if(this.left != null) {
             if(this.right != null) {
@@ -105,6 +147,12 @@ public class BSTNode<T extends Comparable<T>> {
         this.height = 0;
     }
 
+    /**
+     * Method to search tree rooted at node for value.
+     *
+     * @param val value to search tree for.
+     * @return <code>boolean</code> value, true if found, false else.
+     */
     public boolean search(T val) {
         if(this.val.compareTo(val) == 0) {
             return true;
@@ -116,6 +164,12 @@ public class BSTNode<T extends Comparable<T>> {
         return false;
     }
 
+    /**
+     * Method to insert value in tree rooted at node.
+     * Template method with one hook defined immediately after insertion.
+     *
+     * @param obj value to be inserted in tree.
+     */
     public void insert(T obj) {
         if(this.val == null) {
             this.val = obj;
@@ -141,10 +195,19 @@ public class BSTNode<T extends Comparable<T>> {
         this.postInsertHook();
     }
 
+    /**
+     * Hook for insertion method, by default recalculates node's height.
+     */
     protected void postInsertHook() {
         this.calcHeight();
     }
 
+    /**
+     * Method to delete value from tree rooted at node.
+     * Template method with one hook defined immediately after deletion.
+     *
+     * @param obj
+     */
     public void delete(T obj) {
         if(obj.compareTo(this.val) == 0){
             if(this.left == null && this.right == null) {
@@ -181,6 +244,9 @@ public class BSTNode<T extends Comparable<T>> {
         this.postDeleteHook();
     }
 
+    /**
+     * Hook for insertion method, by default recalculates node's height.
+     */
     protected void postDeleteHook() {
         this.calcHeight();
     }
