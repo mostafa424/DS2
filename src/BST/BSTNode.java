@@ -24,6 +24,9 @@ public class BSTNode<T extends Comparable<T>> {
      * Factory object to create new nodes for insertion.
      */
     protected BSTNodeFactory<T> factory;
+
+
+
     /**
      * Height of tree rooted at node.
      */
@@ -32,6 +35,9 @@ public class BSTNode<T extends Comparable<T>> {
      * Value stored in node.
      */
     protected T val;
+
+
+
 
     /**
      * Default constructor, initializes node with value.
@@ -250,4 +256,6 @@ public class BSTNode<T extends Comparable<T>> {
     protected void postDeleteHook() {
         this.calcHeight();
     }
+
+
 }
