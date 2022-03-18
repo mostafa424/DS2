@@ -5,7 +5,7 @@ import Dict.Dictionary;
 
 import java.util.Arrays;
 import java.util.Scanner;
-
+//class used to print an interactive CLI for user and testing
 public class AVLDriverCode {
     public void run(){
         Scanner sc= new Scanner(System.in);
