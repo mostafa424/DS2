@@ -62,8 +62,18 @@ public class AVL<T extends Comparable<T>> {
      * @param val value to search for
      * @return <code>Boolean</code> value, true if found, false else.
      */
-    public boolean search(T val) {
-        return this.root.search(val);
+    public boolean contains(T val) {
+        return this.root.contains(val);
+    }
+
+    /**
+     * Method to search AVL tree for node containing value.
+     *
+     * @param val value to search for
+     * @return reference to <code>AVLNode</code> which contains value.
+     */
+    public AVLNode<T> search(T val) {
+        return (AVLNode<T>) this.root.search(val);
     }
 
     /**
@@ -82,7 +92,7 @@ public class AVL<T extends Comparable<T>> {
      * @param obj value of node to remove from AVL Tree.
      */
     public void delete(T obj) {
-        if(!this.root.search(obj)){
+        if(!this.root.contains(obj)){
             return;
         }
         this.root.delete(obj);

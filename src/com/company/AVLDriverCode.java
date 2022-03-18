@@ -27,7 +27,7 @@ public class AVLDriverCode {
                         case 1:
                             System.out.print("Enter search number: ");
                             int search = sc.nextInt();
-                            System.out.println(test.search(search));
+                            System.out.println(test.contains(search));
                             break;
 
                         case 2:

@@ -1,18 +1,18 @@
 package RedBlack;
 
-import AVL.AVLNodeFactory;
 import BST.BSTNode;
 
 /**
- * AVL Tree Node implementation, inherits from BST Node implementation.
+ * Red-Black Tree Node implementation, inherits from BST Node implementation.
  *
  * @param <T> type of data stored in node, must implement Comparable interface.
- *  black: used to know state of node 0->red,1->black,2->double black
  */
 public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
+    /**
+     * Colour state of node; 0->red, 1->black, 2->double black.
+     */
     protected int black;
-    protected RedBlackNode<T> nil;
-    protected RedBlackAdapter<T> adapter;
+
     /**
      * Default constructor, initializes node with value.
      *
@@ -20,7 +20,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
      */
     public RedBlackNode(T val) {
         super(val);
-        this.black = 1;
+        this.black = 0;
         this.factory = new RedBlackNodeFactory<T>();
     }
 
@@ -30,10 +30,9 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
      * @param parent Node parent reference.
      * @param val    value to be stored in node.
      */
-    public RedBlackNode(RedBlackNode<T> parent, T val) {
+    public RedBlackNode(BSTNode<T> parent, T val) {
         super(parent, val);
-        this.parent = (RedBlackNode<T>) this.getParent();
-        this.black = 1;
+        this.black = 0;
         this.factory = new RedBlackNodeFactory<T>();
     }
 
@@ -41,6 +40,14 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         super(parent, val);
         this.black = color;
         this.factory = new RedBlackNodeFactory<T>();
+    }
+
+    public int getBlack() {
+        return black;
+    }
+
+    public void setBlack(int black) {
+        this.black = black;
     }
 
     /**
@@ -92,75 +99,79 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
     }
 
     /**
-     * Method to calculate balance factor of a node based on children's heights.
-     *
-     * @param node Node to calculate balance factor for.
-     * @return calculated balance factor.
-     */
-    private static int calcBalance(BSTNode<?> node) {
-        if (node.getLeft() != null) {
-            if (node.getRight() != null) {
-                return node.getLeft().getHeight() - node.getRight().getHeight();
-            }
-            return node.getLeft().getHeight() + 1;
-        }
-        if (node.getRight() != null) {
-            return -1 - node.getRight().getHeight();
-        }
-        return 0;
-    }
-
-    /**
-     * Overridden post-insert hook.
-     * Rebalances the tree rooted at node if balance factor is not proper.
+     * Overridden insert.
+     * Rebalances the tree rooted at node if black height is not proper.
      */
     @Override
-    protected void postInsertHook() {
-        int balance = calcBalance(this);
-        if (balance > 1) {
-            int leftBal = calcBalance(this.left);
-            //Left-left insertion
-            if (leftBal == 1 || leftBal == 0) {
-                rotateRight(this.left);
-                this.calcHeight();
-                this.parent.calcHeight();
-                //Left-right insertion
-            } else if (leftBal == -1) {
-                rotateLeft(this.left.getRight());
-                rotateRight(this.left);
-                this.calcHeight();
-                this.parent.getLeft().calcHeight();
-                this.parent.calcHeight();
-            }
-        } else if (balance < -1) {
-            int rightBal = calcBalance(this.right);
-            //Right-right insertion
-            if (rightBal == -1 || rightBal == 0) {
-                rotateLeft(this.right);
-                this.calcHeight();
-                this.parent.calcHeight();
-                //Right-left insertion
-            } else if (rightBal == 1) {
-                rotateRight(this.right.getLeft());
-                rotateLeft(this.right);
-                this.calcHeight();
-                this.parent.getRight().calcHeight();
-                this.parent.calcHeight();
-            }
-        } else {
+    public void insert(T obj) {
+        if(this.val == null) {
+            this.val = obj;
+            this.fixColor();
             this.calcHeight();
+            return;
+        }
+        if (this.val.compareTo(obj) > 0) {
+            if(this.left == null) {
+                this.left = new RedBlackNode<T>(this, obj);
+                ((RedBlackNode<T>)this.left).fixColor();
+                return;
+            }
+            this.left.insert(obj);
+        } else if (this.val.compareTo(obj) < 0) {
+            if(this.right == null) {
+                this.right = new RedBlackNode<T>(this, obj);
+                ((RedBlackNode<T>)this.right).fixColor();
+                return;
+            }
+            this.right.insert(obj);
         }
     }
 
     /**
-     * Overridden post-insert hook.
-     * Rebalances the tree rooted at node if balance factor is not proper.
+     * Method to fix coloring of nodes in tree to which a value was inserted.
      */
-    @Override
-    protected void postDeleteHook() {
-
-
+    private void fixColor() {
+        if(this.parent == null) {
+            this.black = 1;
+        } else {
+            if(((RedBlackNode<T>)this.parent).black == 0) {
+                if(this.parent == this.parent.getParent().getLeft()) {
+                    if(this.parent.getParent().getRight() != null && ((RedBlackNode<T>)this.parent.getParent().getRight()).black == 0) {
+                        ((RedBlackNode<T>)this.parent).black = 1;
+                        ((RedBlackNode<T>)this.parent.getParent().getRight()).black = 1;
+                        ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                        ((RedBlackNode<T>)this.parent.getParent()).fixColor();
+                    } else {
+                        if(this == this.parent.getLeft()) {
+                            ((RedBlackNode<T>)this.parent).black = 1;
+                            ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                            rotateRight(this.parent);
+                        } else {
+                            rotateLeft(this);
+                            ((RedBlackNode<T>)this.left).fixColor();
+                        }
+                    }
+                } else {
+                    if(this.parent.getParent().getLeft() != null && ((RedBlackNode<T>)this.parent.getParent().getLeft()).black == 0) {
+                        ((RedBlackNode<T>)this.parent).black = 1;
+                        ((RedBlackNode<T>)this.parent.getParent().getLeft()).black = 1;
+                        ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                        ((RedBlackNode<T>)this.parent.getParent()).fixColor();
+                    } else {
+                        if(this == this.parent.getRight()) {
+                            ((RedBlackNode<T>)this.parent).black = 1;
+                            ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                            rotateLeft(this.parent);
+                        } else {
+                            rotateRight(this);
+                            ((RedBlackNode<T>)this.right).fixColor();
+                        }
+                    }
+                }
+            }
+        }
     }
+
     @Override
     public void delete(T obj){
         int color=0;
@@ -215,9 +226,6 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         } else {
             this.right.delete(obj);
         }
-    }
-    public int getBlack() {
-        return black;
     }
 
     public void deleteFixup(){
@@ -303,9 +311,6 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                 (this).deleteFixup();
             }
         }
-    }
-    public void setBlack(int black) {
-        this.black = black;
     }
 }
 

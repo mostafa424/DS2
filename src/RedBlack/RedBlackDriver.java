@@ -3,191 +3,141 @@ package RedBlack;
 import AVL.AVL;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class RedBlackDriver {
-    public void test(){
-        RedBlackNode<Integer>root = new RedBlackNode<Integer>(null,10,1);
-        root.setLeft(new RedBlackNode<>(root,5,1));
-        root.setRight(new RedBlackNode<>((RedBlackNode<Integer>) root,30,1));
-        root.getLeft().setLeft(new RedBlackNode<Integer>((RedBlackNode<Integer>) root.getLeft(),1,1));
-        root.getLeft().setRight(new RedBlackNode<Integer>((RedBlackNode<Integer>) root.getLeft(),7,1));
-        root.getRight().setLeft(new RedBlackNode<>((RedBlackNode<Integer>) root.getRight(),25,0));
-        root.getRight().setRight(new RedBlackNode<>((RedBlackNode<Integer>) root.getRight(),40,1));
-        root.getRight().getLeft().setLeft(new RedBlackNode<Integer>((RedBlackNode<Integer>) root.getRight().getLeft(),20,1));
-        root.getRight().getLeft().setRight(new RedBlackNode<Integer>((RedBlackNode<Integer>) root.getRight().getLeft(),28,1));
-        print(root);
-        root.delete(1);
-        System.out.println("tree after deletion");
-        print(root);
-    }
-    private void print(RedBlackNode<Integer> node){
-        if(node == null){
-            return;
-        }
-            print((RedBlackNode<Integer>) node.getLeft());
-            /* then print the data of node */
-            System.out.println("node value: "+node.getVal() + " "+"node color is: "+node.black);
-            /* now recur on right child */
-            print((RedBlackNode<Integer>) node.getRight());
-        }
-    public void run(){
-            Scanner sc= new Scanner(System.in);
-            System.out.print("Press 1 to test Red BlackTrees,2 to compare results, 3 to exit : ");
-            int in = sc.nextInt();
-            switch (in){
-                case 1:
-                    System.out.println("You are testing RedBlack tree code");
-                    RedBlackTree<Integer> test= new RedBlackTree<>();
-                    while(true){
-                        System.out.println("Select the operation you want to perform by pressing the respective number: ");
-                        System.out.println("1:search");
-                        System.out.println("2:insert");
-                        System.out.println("3:delete");
-                        System.out.println("4:getRoot");
-                        System.out.println("5:isEmpty");
-                        System.out.println("6:clear");
-                        System.out.println("7:contains");
-                        System.out.println("8:exit");
-                        int option = sc.nextInt();
-                        switch(option){
-                            case 1:
-                                System.out.print("Enter search number: ");
-                                int search = sc.nextInt();
-                                System.out.println(test.search(search));
-                                break;
 
-                            case 2:
-                                System.out.print("Enter number to be inserted: ");
-                                int insertNumber = sc.nextInt();
-                                test.insert(insertNumber);
+    public void run() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Press 1 to test Red BlackTrees,2 to compare results, 3 to exit : ");
+        int in = sc.nextInt();
+        switch (in) {
+            case 1:
+                System.out.println("You are testing RedBlack tree code");
+                RedBlackTree<Integer> test = new RedBlackTree<>();
+                while (true) {
+                    System.out.println("Select the operation you want to perform by pressing the respective number: ");
+                    System.out.println("1:search");
+                    System.out.println("2:insert");
+                    System.out.println("3:delete");
+                    System.out.println("4:getRoot");
+                    System.out.println("5:isEmpty");
+                    System.out.println("6:clear");
+                    System.out.println("7:contains");
+                    System.out.println("8:exit");
+                    int option = sc.nextInt();
+                    switch (option) {
+                        case 1:
+                            System.out.print("Enter search number: ");
+                            int search = sc.nextInt();
+                            System.out.println(test.search(search));
+                            break;
+
+                        case 2:
+                            System.out.print("Enter number to be inserted: ");
+                            int insertNumber = sc.nextInt();
+                            if(test.insert(insertNumber)) {
                                 System.out.println("Operation Successful");
-                                break;
-                            case 3:
-                                System.out.print("Enter number to be deleted: ");
-                                int deletedNumber = sc.nextInt();
-                                test.delete(deletedNumber);
+                            } else {
+                                System.out.println("Operation failed, already present in tree.");
+                            }
+                            break;
+                        case 3:
+                            System.out.print("Enter number to be deleted: ");
+                            int deletedNumber = sc.nextInt();
+                            if(test.delete(deletedNumber)){
                                 System.out.println("Operation Successful");
-                                break;
-                            case 4: System.out.println(test.getRoot());
-                            case 5: System.out.println(test.isEmpty());
-                            case 6: test.clear();
-                            case 7:
-                                System.out.print("Enter search number: ");
-                                int contain = sc.nextInt();
-                                System.out.println(test.search(contain));
-                                break;
-                        }
-                        if(option == 8){System.out.println("Exiting....");break;}
+                            } else {
+                                System.out.println("Operation failed, no such element in tree.");
+                            }
+                            break;
+                        case 4:
+                            System.out.println(test.getRoot());
+                        case 5:
+                            System.out.println(test.isEmpty());
+                        case 6:
+                            test.clear();
+                        case 7:
+                            System.out.print("Enter search number: ");
+                            int contain = sc.nextInt();
+                            System.out.println(test.contains(contain));
+                            break;
                     }
+                    if (option == 8) {
+                        System.out.println("Exiting....");
+                        break;
+                    }
+                }
                 break;
-                case 2:
-                    System.out.println("You are now comparing RedBlack and AVL trees");
-                    RedBlackTree<String> test2= new RedBlackTree<>();
-                    AVL<String> test3= new AVL<String>();
-                    long[][] AVLInsert = new long[11][3];
-                    long[][] AVLDelete = new long[11][3];
-                    long[][] redBlackInsert = new long[11][3];
-                    long[][] redBlackDelete = new long[11][3];
-                    for(int i=0;i<=10;i++){
-                        String randomString = getAlphaNumericString(i+1);
-                        int n=10;
-                        while(n<=1000){
-                            long before = System.currentTimeMillis();
-                            test2.insert(randomString);
-                            long after = System.currentTimeMillis();
-                            redBlackInsert[i][(int)Math.log10(n)-1]=after-before;
-                            n*=10;
-                        }
+            case 2:
+                System.out.println("You are now comparing RedBlack and AVL trees");
+                RedBlackTree<String> test2 = new RedBlackTree<String>();
+                AVL<String> test3 = new AVL<String>();
+                int[] cases = {5,10,25,50,100,250,500,1000};
+                List<List<Long>> avlDel = new ArrayList<List<Long>>();
+                List<List<Long>> avlIns = new ArrayList<List<Long>>();
+                List<List<Long>> rblDel = new ArrayList<List<Long>>();
+                List<List<Long>> rblIns = new ArrayList<List<Long>>();
+                for(int i = 0; i < cases.length; i++) {
+                    avlDel.add(new ArrayList<Long>());
+                    avlIns.add(new ArrayList<Long>());
+                    rblDel.add(new ArrayList<Long>());
+                    rblIns.add(new ArrayList<Long>());
+                    String[] strings = new String[cases[i]];
+                    for(int j = 0; j < strings.length; j++) {
+                        strings[j] = generateRandomString(50);
                     }
-                    for(int i=0;i<=10;i++){
-                        String randomString = getAlphaNumericString(i+1);
-                        int n=10;
-                        while(n<=1000){
-                            long before = System.currentTimeMillis();
-                            test2.delete(randomString);
-                            long after = System.currentTimeMillis();
-                            redBlackDelete[i][(int)Math.log10(n)-1]=after-before;
-                            n*=10;
-                        }
+                    long timeBefore = System.nanoTime();
+                    for(int j = 0; j < strings.length; j++) {
+                        test3.insert(strings[j]);
                     }
-                    for(int i=0;i<=10;i++){
-                        String randomString = getAlphaNumericString(i+1);
-                        int n=10;
-                        while(n<=1000){
-                            long before = System.currentTimeMillis();
-                            test3.insert(randomString);
-                            long after = System.currentTimeMillis();
-                            AVLInsert[i][(int)Math.log10(n)-1]=after-before;
-                            n*=10;
-                        }
+                    long timeAfter = System.nanoTime();
+                    avlIns.get(i).add(timeAfter-timeBefore);
+                    timeBefore = System.nanoTime();
+                    for(int j = 0; j < strings.length; j++) {
+                        test3.delete(strings[j]);
                     }
-                    for(int i=0;i<=10;i++){
-                        String randomString = getAlphaNumericString(i+1);
-                        int n=10;
-                        while(n<=1000){
-                            long before = System.currentTimeMillis();
-                            test3.delete(randomString);
-                            long after = System.currentTimeMillis();
-                            AVLDelete[i][(int)Math.log10(n)-1]=after-before;
-                            n*=10;
-                        }
+                    timeAfter = System.nanoTime();
+                    avlDel.get(i).add(timeAfter-timeBefore);
+                    timeBefore = System.nanoTime();
+                    for(int j = 0; j < strings.length; j++) {
+                        test2.insert(strings[j]);
                     }
-                    System.out.println("Data For AVL Insertions:");
-                    for(long[] row:AVLInsert){
-                        System.out.println(Arrays.toString(row));
+                    timeAfter = System.nanoTime();
+                    rblIns.get(i).add(timeAfter-timeBefore);
+                    timeBefore = System.nanoTime();
+                    for(int j = 0; j < strings.length; j++) {
+                        test2.delete(strings[j]);
                     }
-                    System.out.println("Data For AVL Deletions:");
-                    for(long[] row:AVLDelete){
-                        System.out.println(Arrays.toString(row));
-                    }
-                    System.out.println("Data For Red Black Insertions:");
-                    for(long[] row:redBlackInsert){
-                        System.out.println(Arrays.toString(row));
-                    }
-                    System.out.println("Data For Red Black Deletions:");
-                    for(long[] row:redBlackDelete){
-                        System.out.println(Arrays.toString(row));
-                    }
+                    timeAfter = System.nanoTime();
+                    rblDel.get(i).add(timeAfter-timeBefore);
+                }
+
+                System.out.println("Data For AVL Insertions:");
+                System.out.println(avlIns.toString());
+                System.out.println("Data For AVL Deletions:");
+                System.out.println(avlDel.toString());
+                System.out.println("Data For Red Black Insertions:");
+                System.out.println(rblIns.toString());
+                System.out.println("Data For Red Black Deletions:");
+                System.out.println(rblDel.toString());
                 return;
-                case 3:
-                    System.out.println("Exiting....");return;
-            }
+            case 3:
+                System.out.println("Exiting....");
+                return;
         }
-    private static String getAlphaNumericString(int n)
-    {
+    }
 
-        // length is bounded by 256 Character
-        byte[] array = new byte[256];
-        new Random().nextBytes(array);
-
-        String randomString
-                = new String(array, StandardCharsets.UTF_8);
-
-        // Create a StringBuffer to store the result
-        StringBuilder r = new StringBuilder();
-
-        // Append first 20 alphanumeric characters
-        // from the generated random String into the result
-        for (int k = 0; k < randomString.length(); k++) {
-
-            char ch = randomString.charAt(k);
-
-            if (((ch >= 'a' && ch <= 'z')
-                    || (ch >= 'A' && ch <= 'Z')
-                    || (ch >= '0' && ch <= '9'))
-                    && (n > 0)) {
-
-                r.append(ch);
-                n--;
-            }
+    private static String generateRandomString(int n) {
+        Random random = new Random();
+        StringBuilder str = new StringBuilder("");
+        for (int i = 0; i < n; i++) {
+            char ch = (char) (random.nextInt(57) + 65);
+            str.append(ch);
         }
+        return str.toString();
+    }
 
-        // return the resultant string
-        return r.toString();
-    }
-    }
+}
 
 

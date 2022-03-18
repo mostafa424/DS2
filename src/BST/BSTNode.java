@@ -159,15 +159,32 @@ public class BSTNode<T extends Comparable<T>> {
      * @param val value to search tree for.
      * @return <code>boolean</code> value, true if found, false else.
      */
-    public boolean search(T val) {
+    public boolean contains(T val) {
         if(this.val != null && this.val.compareTo(val) == 0) {
             return true;
-        } else if (this.left != null && this.val.compareTo(val) > 0) {
-            return this.left.search(val);
-        } else if (this.right != null && this.val.compareTo(val) < 0) {
-            return this.right.search(val);
+        } else if (this.val != null && this.left != null && this.val.compareTo(val) > 0) {
+            return this.left.contains(val);
+        } else if (this.val != null && this.right != null && this.val.compareTo(val) < 0) {
+            return this.right.contains(val);
         }
         return false;
+    }
+
+    /**
+     * Method to search and obtain a reference to node containing a specified value.
+     *
+     * @param val value to search tree for.
+     * @return <code>BSTNode</code> containing value, null if doesn't exist.
+     */
+    public BSTNode<T> search(T val) {
+        if(this.val != null && this.val.compareTo(val) == 0) {
+            return this;
+        } else if (this.val != null && this.left != null && this.val.compareTo(val) > 0) {
+            return this.left.search(val);
+        } else if (this.val != null && this.right != null && this.val.compareTo(val) < 0) {
+            return this.right.search(val);
+        }
+        return null;
     }
 
     /**
@@ -212,7 +229,7 @@ public class BSTNode<T extends Comparable<T>> {
      * Method to delete value from tree rooted at node.
      * Template method with one hook defined immediately after deletion.
      *
-     * @param obj
+     * @param obj value stored in node to delete from tree.
      */
     public void delete(T obj) {
         if(obj.compareTo(this.val) == 0){
