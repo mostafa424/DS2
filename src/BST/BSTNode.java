@@ -154,7 +154,7 @@ public class BSTNode<T extends Comparable<T>> {
      * @return <code>boolean</code> value, true if found, false else.
      */
     public boolean search(T val) {
-        if(this.val.compareTo(val) == 0) {
+        if(this.val != null && this.val.compareTo(val) == 0) {
             return true;
         } else if (this.left != null && this.val.compareTo(val) > 0) {
             return this.left.search(val);
