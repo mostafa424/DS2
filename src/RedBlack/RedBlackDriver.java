@@ -74,15 +74,11 @@ public class RedBlackDriver {
                 RedBlackTree<String> test2 = new RedBlackTree<String>();
                 AVL<String> test3 = new AVL<String>();
                 int[] cases = {5,10,25,50,100,250,500,1000};
-                List<List<Long>> avlDel = new ArrayList<List<Long>>();
-                List<List<Long>> avlIns = new ArrayList<List<Long>>();
-                List<List<Long>> rblDel = new ArrayList<List<Long>>();
-                List<List<Long>> rblIns = new ArrayList<List<Long>>();
+                List<Long> avlDel = new ArrayList<Long>();
+                List<Long> avlIns = new ArrayList<Long>();
+                List<Long> rblDel = new ArrayList<Long>();
+                List<Long> rblIns = new ArrayList<Long>();
                 for(int i = 0; i < cases.length; i++) {
-                    avlDel.add(new ArrayList<Long>());
-                    avlIns.add(new ArrayList<Long>());
-                    rblDel.add(new ArrayList<Long>());
-                    rblIns.add(new ArrayList<Long>());
                     String[] strings = new String[cases[i]];
                     for(int j = 0; j < strings.length; j++) {
                         strings[j] = generateRandomString(50);
@@ -92,25 +88,25 @@ public class RedBlackDriver {
                         test3.insert(strings[j]);
                     }
                     long timeAfter = System.nanoTime();
-                    avlIns.get(i).add(timeAfter-timeBefore);
+                    avlIns.add(timeAfter-timeBefore);
                     timeBefore = System.nanoTime();
                     for(int j = 0; j < strings.length; j++) {
                         test3.delete(strings[j]);
                     }
                     timeAfter = System.nanoTime();
-                    avlDel.get(i).add(timeAfter-timeBefore);
+                    avlDel.add(timeAfter-timeBefore);
                     timeBefore = System.nanoTime();
                     for(int j = 0; j < strings.length; j++) {
                         test2.insert(strings[j]);
                     }
                     timeAfter = System.nanoTime();
-                    rblIns.get(i).add(timeAfter-timeBefore);
+                    rblIns.add(timeAfter-timeBefore);
                     timeBefore = System.nanoTime();
                     for(int j = 0; j < strings.length; j++) {
                         test2.delete(strings[j]);
                     }
                     timeAfter = System.nanoTime();
-                    rblDel.get(i).add(timeAfter-timeBefore);
+                    rblDel.add(timeAfter-timeBefore);
                 }
 
                 System.out.println("Data For AVL Insertions:");

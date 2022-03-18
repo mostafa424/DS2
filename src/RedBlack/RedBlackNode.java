@@ -233,11 +233,11 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
             this.black=1;
             return;
         }
-        else if(this.parent.getLeft()==this && this.parent.getRight() instanceof RedBlackNode<T>){
+        else if(this.parent.getLeft() == this){
             RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getRight();
             RedBlackNode<T> siblingLeft= (RedBlackNode<T>) sibling.getLeft();
             RedBlackNode<T> siblingRight= (RedBlackNode<T>) sibling.getRight();
-            if( this.parent instanceof RedBlackNode && sibling.black==1 && ((sibling.getLeft()==null && sibling.getRight()==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
+            if(sibling.black==1 && ((siblingLeft==null && siblingRight==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
                 if (((RedBlackNode<T>) this.parent).black == 1) {
                     sibling.black = 0;
                     ((RedBlackNode<T>) this.parent).deleteFixup();
@@ -251,21 +251,20 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                 siblingLeft.black= sibling.black;
                 sibling.black=tmp2;
                 rotateRight(siblingLeft);
-
                 int tmp = ((RedBlackNode<T>) this.parent).black;
                 ((RedBlackNode<T>) this.parent).black = siblingLeft.black;
                 siblingLeft.black=tmp;
                 sibling.black=1;
                 rotateLeft(sibling);
             }
-            else if( this.parent instanceof RedBlackNode && sibling.black==1 && (siblingRight.black==0 && (sibling.getLeft()==null|| siblingLeft.black==1))){
+            else if(sibling.black==1 && (siblingRight.black==0 && (sibling.getLeft()==null|| siblingLeft.black==1))){
                 int tmp = ((RedBlackNode<T>) this.parent).black;
                 ((RedBlackNode<T>) this.parent).black = siblingLeft.black;
                 siblingLeft.black=tmp;
                 sibling.black=1;
                 rotateLeft(sibling);
             }
-            else if(this.parent instanceof RedBlackNode && sibling.black==0){
+            else if(sibling.black==0){
                 sibling.black=1;
                 ((RedBlackNode<T>) this.parent).black=0;
                 rotateLeft(sibling);
@@ -276,7 +275,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
             RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getLeft();
             RedBlackNode<T> siblingLeft= (RedBlackNode<T>) sibling.getLeft();
             RedBlackNode<T> siblingRight= (RedBlackNode<T>) sibling.getRight();
-            if( this.parent instanceof RedBlackNode && sibling.black==1 && ((sibling.getLeft()==null && sibling.getRight()==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
+            if(sibling.black==1 && ((sibling.getLeft()==null && sibling.getRight()==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
                 if (((RedBlackNode<T>) this.parent).black == 1) {
                     sibling.black = 0;
                     ((RedBlackNode<T>) this.parent).deleteFixup();
@@ -296,19 +295,18 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                 sibling.black=1;
                 rotateRight(sibling);
             }
-            else if(this.parent instanceof RedBlackNode && sibling.black==1 && (siblingLeft.black==0 && (sibling.getRight()==null|| siblingRight.black==1))){
+            else if(sibling.black==1 && (siblingLeft.black==0 && (sibling.getRight()==null|| siblingRight.black==1))){
                 int tmp = ((RedBlackNode<T>) this.parent).black;
                 ((RedBlackNode<T>) this.parent).black = sibling.black;
                 sibling.black=tmp;
                 siblingLeft.black=1;
                 rotateRight(sibling);
-
             }
-            else if(this.parent instanceof RedBlackNode && sibling.black==0){
+            else if(sibling.black==0){
                 sibling.black=1;
                 ((RedBlackNode<T>) this.parent).black=0;
                 rotateRight(sibling);
-                (this).deleteFixup();
+                this.deleteFixup();
             }
         }
     }

@@ -48,15 +48,6 @@ public class RedBlackTree<T extends Comparable<T>> {
     }
 
     /**
-     * Height getter
-     *
-     * @return height of tree rooted at root.
-     */
-    public int getHeight() {
-        return this.root.getHeight();
-    }
-
-    /**
      * Method to search Red-Black tree for a value.
      *
      * @param val value to search for
