@@ -245,12 +245,10 @@ public class BSTNode<T extends Comparable<T>> {
                 }
             } else if (this.left == null) {
                 this.val = this.right.val;
-                this.right.parent = null;
-                this.right = null;
+                this.right.delete(this.val);
             } else if (this.right == null) {
                 this.val = this.left.val;
-                this.left.parent = null;
-                this.left = null;
+                this.left.delete(this.val);
             } else {
                 BSTNode<T> temp = this.left;
                 while(temp.right != null) {

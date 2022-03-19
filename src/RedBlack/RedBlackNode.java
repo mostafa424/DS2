@@ -194,46 +194,31 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                 if(this.parent == null) {
                     this.val = null;
                 } else {
+                    if(this.black){
+                        deleteFixup();
+                    }
                     if (this.parent.getLeft() == this) {
-                        if(this.black){
-                            deleteFixup();
-                        }
                         this.parent.setLeft(null);
-
                     } else {
-                        if(this.black){
-                            deleteFixup();
-                        }
                         this.parent.setRight(null);
                     }
                 }
             } else if (this.getLeft() == null) {
                 this.val = this.right.getVal();
-                if(this.right instanceof RedBlackNode<T> ){
-                    color = ((RedBlackNode<T>) this.right).black;
-                }
-                this.right.setParent(null);
-                this.right = null;
+                color = ((RedBlackNode<T>) this.right).black;
+                this.right.delete(this.val);
             } else if (this.right == null) {
                 this.val = this.left.getVal();
-                if(this.left instanceof RedBlackNode<T> ){
-                    color = ((RedBlackNode<T>) this.left).black;
-                }
-                this.left.setParent(null);
-                this.left = null;
-            }
-
-            else {
+                color = ((RedBlackNode<T>) this.left).black;
+                this.left.delete(this.val);
+            } else {
                 BSTNode<T> temp = this.getLeft();
                 while(temp.getRight() != null) {
                     temp = temp.getRight();
                 }
                 this.val = temp.getVal();
-                if(temp instanceof RedBlackNode<T> ){
-                    color = ((RedBlackNode<T>) temp).black;
-                }
+                color = ((RedBlackNode<T>) temp).black;
                 this.left.delete(this.val);
-
             }
             if(color){
                 this.deleteFixup();
