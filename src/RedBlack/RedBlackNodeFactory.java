@@ -1,11 +1,10 @@
 package RedBlack;
 
-import AVL.AVLNode;
 import BST.BSTNode;
 import BST.BSTNodeFactory;
 
 /**
- * Factory method that creates AVL Tree Nodes.
+ * Factory method that creates Red-Black Tree Nodes.
  * Extends BST Node Factory.
  *
  * @param <T> type of data to be stored in created nodes, must implement Comparable interface.
@@ -13,10 +12,10 @@ import BST.BSTNodeFactory;
 public class RedBlackNodeFactory<T extends Comparable<T>> extends BSTNodeFactory<T> {
 
     /**
-     * Method to initialize an AVL node with only a value.
+     * Method to initialize a Red-Black node with only a value.
      *
      * @param val value to be stored in node.
-     * @return AVLNode initialized with value.
+     * @return RedBlackNode initialized with value.
      */
     @Override
     public RedBlackNode<T> getNode(T val) {
@@ -25,14 +24,14 @@ public class RedBlackNodeFactory<T extends Comparable<T>> extends BSTNodeFactory
 
 
     /**
-     * Method to initialize an AVL node with both a reference to a parent node and a value.
+     * Method to initialize a Red-Black node with both a reference to a parent node and a value.
      *
      * @param parent reference to parent node.
      * @param val value to be stored in node.
-     * @return AVLNode initialized with parent node reference and value.
+     * @return RedBlackNode initialized with parent node reference and value.
      */
     @Override
-    public BSTNode<T> getNode(BSTNode<T> parent, T val) {
-        return new AVLNode<T>(parent, val);
+    public RedBlackNode<T> getNode(BSTNode<T> parent, T val) {
+        return new RedBlackNode<T>(parent, val);
     }
 }

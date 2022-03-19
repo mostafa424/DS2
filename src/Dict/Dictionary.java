@@ -107,7 +107,7 @@ public class Dictionary {
      * @param word word to be inserted into dictionary.
      */
     public void insert(String word) {
-        if(!tree.search(word.toLowerCase(Locale.ROOT))) {
+        if(!tree.contains(word.toLowerCase(Locale.ROOT))) {
             this.tree.insert(word.toLowerCase(Locale.ROOT));
             this.size++;
         } else {
@@ -122,7 +122,7 @@ public class Dictionary {
      * @return <code>boolean</code> value, true if found, false else.
      */
     public boolean find(String word) {
-        return this.tree.search(word.toLowerCase(Locale.ROOT));
+        return this.tree.contains(word.toLowerCase(Locale.ROOT));
     }
 
     /**
@@ -132,7 +132,7 @@ public class Dictionary {
      * @param word word to delete from dictionary.
      */
     public void delete(String word) {
-        if(tree.search(word.toLowerCase(Locale.ROOT))) {
+        if(tree.contains(word.toLowerCase(Locale.ROOT))) {
             this.tree.delete(word.toLowerCase(Locale.ROOT));
             this.size--;
         } else {
