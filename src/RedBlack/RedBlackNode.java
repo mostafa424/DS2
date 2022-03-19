@@ -11,7 +11,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
     /**
      * Colour state of node; 0->red, 1->black, 2->double black.
      */
-    protected int black;
+    protected boolean black;
 
     /**
      * Default constructor, initializes node with value.
@@ -20,7 +20,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
      */
     public RedBlackNode(T val) {
         super(val);
-        this.black = 0;
+        this.black = false;
         this.factory = new RedBlackNodeFactory<T>();
     }
 
@@ -32,21 +32,21 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
      */
     public RedBlackNode(BSTNode<T> parent, T val) {
         super(parent, val);
-        this.black = 0;
+        this.black = false;
         this.factory = new RedBlackNodeFactory<T>();
     }
 
-    public RedBlackNode(RedBlackNode<T> parent, T val, int color) {
+    public RedBlackNode(RedBlackNode<T> parent, T val, boolean color) {
         super(parent, val);
         this.black = color;
         this.factory = new RedBlackNodeFactory<T>();
     }
 
-    public int getBlack() {
+    public boolean getBlack() {
         return black;
     }
 
-    public void setBlack(int black) {
+    public void setBlack(boolean black) {
         this.black = black;
     }
 
@@ -132,19 +132,19 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
      */
     private void fixColor() {
         if(this.parent == null) {
-            this.black = 1;
+            this.black = true;
         } else {
-            if(((RedBlackNode<T>)this.parent).black == 0) {
+            if(!((RedBlackNode<T>)this.parent).black) {
                 if(this.parent == this.parent.getParent().getLeft()) {
-                    if(this.parent.getParent().getRight() != null && ((RedBlackNode<T>)this.parent.getParent().getRight()).black == 0) {
-                        ((RedBlackNode<T>)this.parent).black = 1;
-                        ((RedBlackNode<T>)this.parent.getParent().getRight()).black = 1;
-                        ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                    if(this.parent.getParent().getRight() != null && !((RedBlackNode<T>)this.parent.getParent().getRight()).black) {
+                        ((RedBlackNode<T>)this.parent).black = true;
+                        ((RedBlackNode<T>)this.parent.getParent().getRight()).black = true;
+                        ((RedBlackNode<T>)this.parent.getParent()).black = false;
                         ((RedBlackNode<T>)this.parent.getParent()).fixColor();
                     } else {
                         if(this == this.parent.getLeft()) {
-                            ((RedBlackNode<T>)this.parent).black = 1;
-                            ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                            ((RedBlackNode<T>)this.parent).black = true;
+                            ((RedBlackNode<T>)this.parent.getParent()).black = false;
                             rotateRight(this.parent);
                         } else {
                             rotateLeft(this);
@@ -152,15 +152,15 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                         }
                     }
                 } else {
-                    if(this.parent.getParent().getLeft() != null && ((RedBlackNode<T>)this.parent.getParent().getLeft()).black == 0) {
-                        ((RedBlackNode<T>)this.parent).black = 1;
-                        ((RedBlackNode<T>)this.parent.getParent().getLeft()).black = 1;
-                        ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                    if(this.parent.getParent().getLeft() != null && !((RedBlackNode<T>)this.parent.getParent().getLeft()).black) {
+                        ((RedBlackNode<T>)this.parent).black = true;
+                        ((RedBlackNode<T>)this.parent.getParent().getLeft()).black = true;
+                        ((RedBlackNode<T>)this.parent.getParent()).black = false;
                         ((RedBlackNode<T>)this.parent.getParent()).fixColor();
                     } else {
                         if(this == this.parent.getRight()) {
-                            ((RedBlackNode<T>)this.parent).black = 1;
-                            ((RedBlackNode<T>)this.parent.getParent()).black = 0;
+                            ((RedBlackNode<T>)this.parent).black = true;
+                            ((RedBlackNode<T>)this.parent.getParent()).black = false;
                             rotateLeft(this.parent);
                         } else {
                             rotateRight(this);
@@ -174,20 +174,20 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
 
     @Override
     public void delete(T obj){
-        int color=0;
+        boolean color=false;
         if(obj.compareTo(this.val) == 0){
             if(this.left == null && this.right == null) {
                 if(this.parent == null) {
                     this.val = null;
                 } else {
                     if (this.parent.getLeft() == this) {
-                        if(this.black==1){
+                        if(this.black){
                             deleteFixup();
                         }
                         this.parent.setLeft(null);
 
                     } else {
-                        if(this.black==1){
+                        if(this.black){
                             deleteFixup();
                         }
                         this.parent.setRight(null);
@@ -221,7 +221,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                 this.left.delete(this.val);
 
             }
-            if(color == 1){
+            if(color){
                 this.deleteFixup();
             }
         } else if (obj.compareTo(this.val) < 0) {
@@ -233,92 +233,86 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
 
     public void deleteFixup(){
         if(this.parent==null){
-            this.black=1;
             return;
         }
-        else if(this.parent.getLeft() == this){
+        else if(this.parent.getLeft() == this) {
             RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getRight();
-            if(sibling==null){
-                return;
+            RedBlackNode<T> siblingLeft = null;
+            RedBlackNode<T> siblingRight = null;
+            if (sibling != null) {
+                siblingLeft = (RedBlackNode<T>) sibling.getLeft();
+                siblingRight = (RedBlackNode<T>) sibling.getRight();
             }
-            RedBlackNode<T> siblingLeft= (RedBlackNode<T>) sibling.getLeft();
-            RedBlackNode<T> siblingRight= (RedBlackNode<T>) sibling.getRight();
-
-            if(sibling.black==1 && ((siblingLeft==null && siblingRight==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
-                if (((RedBlackNode<T>) this.parent).black == 1) {
-                    sibling.black = 0;
+            /*else{
+                return;
+            }*/
+            if(sibling!=null && sibling.black){
+            if (((siblingLeft == null && siblingRight == null) || (siblingLeft != null && siblingLeft.black && siblingRight != null && siblingRight.black))) {
+                sibling.black = false;
+                if (((RedBlackNode<T>) this.parent).black) {
                     ((RedBlackNode<T>) this.parent).deleteFixup();
                 } else {
-                    ((RedBlackNode<T>) this.parent).black = 1;
-                    sibling.black = 0;
+                    ((RedBlackNode<T>) this.parent).black = true;
                 }
-            }
-            else if(sibling.black==1 && (siblingLeft.black==0 && (sibling.getRight()==null|| siblingRight.black==1))){
-                int tmp2 = siblingLeft.black;
-                siblingLeft.black= sibling.black;
-                sibling.black=tmp2;
-                rotateRight(siblingLeft);
-                int tmp = ((RedBlackNode<T>) this.parent).black;
-                ((RedBlackNode<T>) this.parent).black = siblingLeft.black;
-                siblingLeft.black=tmp;
-                sibling.black=1;
+            } else if ((siblingLeft != null && !siblingLeft.black && (sibling.getRight() == null || siblingRight.black))) {
+                swapColors(sibling, siblingLeft);
+                if(siblingRight!=null){rotateRight(siblingRight);}
+                deleteFixup();
+
+            } else if ((siblingRight != null && !siblingRight.black && (siblingLeft == null || siblingLeft.black))) {
+               swapColors((RedBlackNode<T>) this.parent, sibling);
+                siblingRight.black = true;
                 rotateLeft(sibling);
             }
-            else if(sibling.black==1 && (siblingRight.black==0 && (sibling.getLeft()==null|| siblingLeft.black==1))){
-                int tmp = ((RedBlackNode<T>) this.parent).black;
-                ((RedBlackNode<T>) this.parent).black = siblingLeft.black;
-                siblingLeft.black=tmp;
-                sibling.black=1;
-                rotateLeft(sibling);
-            }
-            else if(sibling.black==0){
-                sibling.black=1;
-                ((RedBlackNode<T>) this.parent).black=0;
+        }
+            else if(sibling!=null){
+                sibling.black=true;
+                ((RedBlackNode<T>) this.parent).black=false;
                 rotateLeft(sibling);
                 (this).deleteFixup();
             }
         }
         else{
-            RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getLeft();
-            if(sibling==null){
-                return;
+            RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getRight();
+            RedBlackNode<T> siblingLeft = null;
+            RedBlackNode<T> siblingRight = null;
+            if (sibling != null) {
+                siblingLeft = (RedBlackNode<T>) sibling.getLeft();
+                siblingRight = (RedBlackNode<T>) sibling.getRight();
             }
-            RedBlackNode<T> siblingLeft= (RedBlackNode<T>) sibling.getLeft();
-            RedBlackNode<T> siblingRight= (RedBlackNode<T>) sibling.getRight();
-            if(sibling.black==1 && ((sibling.getLeft()==null && sibling.getRight()==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
-                if (((RedBlackNode<T>) this.parent).black == 1) {
-                    sibling.black = 0;
+            if(sibling!=null && sibling.black){
+            if(((sibling.getLeft()==null && sibling.getRight()==null)|| (siblingLeft!=null && siblingLeft.black && siblingRight!=null&& siblingRight.black))) {
+                if (((RedBlackNode<T>) this.parent).black) {
+                    sibling.black = false;
                     ((RedBlackNode<T>) this.parent).deleteFixup();
                 } else {
-                    ((RedBlackNode<T>) this.parent).black = 1;
-                    sibling.black = 0;
+                    ((RedBlackNode<T>) this.parent).black = true;
+                    sibling.black = false;
                 }
             }
-            else if(sibling.black==1 && (siblingRight.black==0 && (sibling.getLeft()==null|| siblingLeft.black==1))){
-                int tmp2= siblingRight.black;
-                siblingRight.black= sibling.black;
-                sibling.black= tmp2;
-                rotateLeft(siblingRight);
-                int tmp = ((RedBlackNode<T>) this.parent).black;
-                ((RedBlackNode<T>) this.parent).black = siblingRight.black;
-                siblingRight.black=tmp;
-                sibling.black=1;
+            else if((siblingRight!=null && !siblingRight.black && (sibling.getLeft()==null|| siblingLeft.black))){
+                swapColors(siblingRight,sibling);
+                if(siblingLeft!=null){rotateLeft(siblingLeft);}
+                deleteFixup();
+            }
+            else if((siblingLeft!=null && !siblingLeft.black && (sibling.getRight()==null|| siblingRight.black))){
+                swapColors((RedBlackNode<T>) this.parent,sibling);
+                siblingLeft.black=true;
                 rotateRight(sibling);
             }
-            else if(sibling.black==1 && (siblingLeft.black==0 && (sibling.getRight()==null|| siblingRight.black==1))){
-                int tmp = ((RedBlackNode<T>) this.parent).black;
-                ((RedBlackNode<T>) this.parent).black = sibling.black;
-                sibling.black=tmp;
-                siblingLeft.black=1;
-                rotateRight(sibling);
             }
-            else if(sibling.black==0){
-                sibling.black=1;
-                ((RedBlackNode<T>) this.parent).black=0;
+            else if(sibling!=null){
+                sibling.black=true;
+                ((RedBlackNode<T>) this.parent).black=false;
                 rotateRight(sibling);
                 this.deleteFixup();
             }
         }
+    }
+    private void swapColors(RedBlackNode<T> node1,RedBlackNode<T> node2){
+        boolean tmp = ((RedBlackNode<T>) node2).black;
+        ((RedBlackNode<T>) node2).black = node1.black;
+        node1.black=tmp;
     }
 }
 

@@ -5,6 +5,6 @@ import RedBlack.RedBlackDriver;
 
 public class Main {
     public static void main(String[] args) {
-        new AVLDriverCode().run();
+        new RedBlackDriver().run();
     }
 }

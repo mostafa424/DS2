@@ -6,7 +6,36 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class RedBlackDriver {
+    public void test(){
+        RedBlackTree<Integer> redBlackTree = new RedBlackTree<>();
+        redBlackTree.insert(10);
+        redBlackTree.insert(5);
+        redBlackTree.insert(1);
+        redBlackTree.insert(7);
+        redBlackTree.insert(30);
+        redBlackTree.insert(25);
+        redBlackTree.insert(40);
+        redBlackTree.insert(28);
+        redBlackTree.delete(7);
+        redBlackTree.delete(30);
+        redBlackTree.delete(10);
+        redBlackTree.delete(5);
+        redBlackTree.delete(1);
+        redBlackTree.delete(25);
+        redBlackTree.delete(28);
+        redBlackTree.delete(40);
+        traverse(redBlackTree.getRoot());
+    }
 
+    private void traverse(RedBlackNode<Integer> node){
+        if (node == null) {
+            return;
+        }
+
+        traverse((RedBlackNode<Integer>) node.getLeft());
+        System.out.println("node value: "+node.getVal() + " node color: "+node.getBlack());
+        traverse((RedBlackNode<Integer>) node.getRight());
+    }
     public void run() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Press 1 to test Red BlackTrees,2 to compare results, 3 to exit : ");
@@ -73,7 +102,7 @@ public class RedBlackDriver {
                 System.out.println("You are now comparing RedBlack and AVL trees");
                 RedBlackTree<String> test2 = new RedBlackTree<String>();
                 AVL<String> test3 = new AVL<String>();
-                int[] cases = {5,10,25,50,100,250,500,1000};
+                int[] cases = {5,10,25,50,100,250,500};
                 List<Long> avlDel = new ArrayList<Long>();
                 List<Long> avlIns = new ArrayList<Long>();
                 List<Long> rblDel = new ArrayList<Long>();
@@ -81,7 +110,7 @@ public class RedBlackDriver {
                 for(int i = 0; i < cases.length; i++) {
                     String[] strings = new String[cases[i]];
                     for(int j = 0; j < strings.length; j++) {
-                        strings[j] = generateRandomString(50);
+                        strings[j] = generateRandomString(20);
                     }
                     long timeBefore = System.nanoTime();
                     for(int j = 0; j < strings.length; j++) {
