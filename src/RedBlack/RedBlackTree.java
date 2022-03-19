@@ -1,9 +1,10 @@
 package RedBlack;
 
+
 /**
- * AVL Tree implementation.
+ * Red-Black Tree implementation.
  *
- * @param <T> Type of elements stored in AVL tree, must implement the Comparable interface.
+ * @param <T> Type of elements stored in Red-Black tree, must implement the Comparable interface.
  */
 public class RedBlackTree<T extends Comparable<T>> {
     /**
@@ -47,52 +48,61 @@ public class RedBlackTree<T extends Comparable<T>> {
     }
 
     /**
-     * Height getter
-     *
-     * @return height of tree rooted at root.
-     */
-    public int getHeight() {
-        return this.root.getHeight();
-    }
-
-    /**
-     * Method to search AVL tree for a value.
+     * Method to search Red-Black tree for a value.
      *
      * @param val value to search for
      * @return <code>Boolean</code> value, true if found, false else.
      */
-    public boolean search(T val) {
-        return this.root.search(val);
+    public boolean contains(T val) {
+        return this.root.contains(val);
+    }
+
+    /**
+     * Method to search Red-Black tree for node containing value.
+     *
+     * @param val value to search for
+     * @return reference to <code>RedBlackNode</code> which contains value.
+     */
+    public RedBlackNode<T> search(T val) {
+        return (RedBlackNode<T>) this.root.search(val);
     }
 
     /**
      * Method to insert value
      *
-     * @param obj value to insert into AVL tree.
+     * @param obj value to insert into Red-Black tree.
+     * @return <code>boolean</code> value true if insert successful, false if already present.
      */
-    public void insert(T obj) {
-        this.root.insert(obj);
-        findRoot();
+    public boolean insert(T obj) {
+        if(!this.root.contains(obj)){
+            this.root.insert(obj);
+            findRoot();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Method to delete value
      *
-     * @param obj value of node to remove from AVL Tree.
+     * @param obj value of node to remove from Red-Black Tree.
+     * @return <code>boolean</code> value true if delete successful, false if not found.
      */
-    public void delete(T obj) {
-        if(!this.root.search(obj)){
-            return;
+    public boolean delete(T obj) {
+        if(!this.root.contains(obj)){
+            return false;
         }
         this.root.delete(obj);
         findRoot();
+        return true;
     }
 
     public boolean isEmpty() {
-        return root==null;
+        return this.root.getVal() == null;
     }
 
     public void clear() {
-        root=null;
+        this.root = new RedBlackNode<T>(null);
     }
 }

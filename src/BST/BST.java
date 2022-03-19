@@ -1,6 +1,6 @@
 package BST;
-import BST.BSTNode;
-import java.lang.Math;
+
+import AVL.AVLNode;
 
 /**
  * Binary search tree implementation.
@@ -52,12 +52,22 @@ public class BST<T extends Comparable<T>> {
     }
 
     /**
-     * Method to search BST for a value.
+     * Method to search BST tree for a value.
      *
      * @param val value to search for
      * @return <code>Boolean</code> value, true if found, false else.
      */
-    public boolean search(T val) {
+    public boolean contains(T val) {
+        return this.root.contains(val);
+    }
+
+    /**
+     * Method to search BST tree for node containing value.
+     *
+     * @param val value to search for
+     * @return reference to <code>BSTNode</code> which contains value.
+     */
+    public BSTNode<T> search(T val) {
         return this.root.search(val);
     }
 
@@ -76,7 +86,7 @@ public class BST<T extends Comparable<T>> {
      * @param obj value of node to remove from BST.
      */
     public void delete(T obj) {
-        if(!this.root.search(obj)){
+        if(!this.root.contains(obj)){
             return;
         }
         this.root.delete(obj);
