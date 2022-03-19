@@ -187,6 +187,9 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                         this.parent.setLeft(null);
 
                     } else {
+                        if(this.black==1){
+                            deleteFixup();
+                        }
                         this.parent.setRight(null);
                     }
                 }
@@ -235,8 +238,12 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         }
         else if(this.parent.getLeft() == this){
             RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getRight();
+            if(sibling==null){
+                return;
+            }
             RedBlackNode<T> siblingLeft= (RedBlackNode<T>) sibling.getLeft();
             RedBlackNode<T> siblingRight= (RedBlackNode<T>) sibling.getRight();
+
             if(sibling.black==1 && ((siblingLeft==null && siblingRight==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {
                 if (((RedBlackNode<T>) this.parent).black == 1) {
                     sibling.black = 0;
@@ -273,6 +280,9 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         }
         else{
             RedBlackNode<T> sibling = (RedBlackNode<T>) this.parent.getLeft();
+            if(sibling==null){
+                return;
+            }
             RedBlackNode<T> siblingLeft= (RedBlackNode<T>) sibling.getLeft();
             RedBlackNode<T> siblingRight= (RedBlackNode<T>) sibling.getRight();
             if(sibling.black==1 && ((sibling.getLeft()==null && sibling.getRight()==null)|| (siblingLeft.black==1 && siblingRight.black==1))) {

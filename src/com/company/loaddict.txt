@@ -1,0 +1,10 @@
+ant
+apple
+bar
+cat
+dog
+fish
+lake
+table
+song
+zoo
