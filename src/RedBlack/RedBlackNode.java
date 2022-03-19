@@ -98,6 +98,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         node.setParent(temp);
     }
 
+
     /**
      * Overridden insert.
      * Rebalances the tree rooted at node if black height is not proper.
@@ -107,23 +108,26 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         if(this.val == null) {
             this.val = obj;
             this.fixColor();
-            this.calcHeight();
             return;
         }
         if (this.val.compareTo(obj) > 0) {
             if(this.left == null) {
                 this.left = new RedBlackNode<T>(this, obj);
                 ((RedBlackNode<T>)this.left).fixColor();
+                this.calcHeight();
                 return;
             }
             this.left.insert(obj);
+            this.calcHeight();
         } else if (this.val.compareTo(obj) < 0) {
             if(this.right == null) {
                 this.right = new RedBlackNode<T>(this, obj);
                 ((RedBlackNode<T>)this.right).fixColor();
+                this.calcHeight();
                 return;
             }
             this.right.insert(obj);
+            this.calcHeight();
         }
     }
 
@@ -141,14 +145,19 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                         ((RedBlackNode<T>)this.parent.getParent().getRight()).black = true;
                         ((RedBlackNode<T>)this.parent.getParent()).black = false;
                         ((RedBlackNode<T>)this.parent.getParent()).fixColor();
+                        this.calcHeight();
                     } else {
                         if(this == this.parent.getLeft()) {
                             ((RedBlackNode<T>)this.parent).black = true;
                             ((RedBlackNode<T>)this.parent.getParent()).black = false;
                             rotateRight(this.parent);
+                            this.calcHeight();
+                            this.parent.getRight().calcHeight();
+                            this.parent.calcHeight();
                         } else {
                             rotateLeft(this);
                             ((RedBlackNode<T>)this.left).fixColor();
+                            this.calcHeight();
                         }
                     }
                 } else {
@@ -157,14 +166,19 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
                         ((RedBlackNode<T>)this.parent.getParent().getLeft()).black = true;
                         ((RedBlackNode<T>)this.parent.getParent()).black = false;
                         ((RedBlackNode<T>)this.parent.getParent()).fixColor();
+                        this.calcHeight();
                     } else {
                         if(this == this.parent.getRight()) {
                             ((RedBlackNode<T>)this.parent).black = true;
                             ((RedBlackNode<T>)this.parent.getParent()).black = false;
                             rotateLeft(this.parent);
+                            this.calcHeight();
+                            this.parent.getLeft().calcHeight();
+                            this.parent.calcHeight();
                         } else {
                             rotateRight(this);
                             ((RedBlackNode<T>)this.right).fixColor();
+                            this.calcHeight();
                         }
                     }
                 }

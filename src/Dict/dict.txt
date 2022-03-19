@@ -1,0 +1,9 @@
+9 cat
+bat
+home
+food
+sea
+mine
+block
+old
+park
