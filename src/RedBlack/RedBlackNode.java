@@ -206,11 +206,17 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
             } else if (this.getLeft() == null) {
                 this.val = this.right.getVal();
                 color = ((RedBlackNode<T>) this.right).black;
-                this.right.delete(this.val);
+                this.left = this.right.getLeft();
+                if(this.right.getLeft() != null) this.right.getLeft().setParent(this);
+                if(this.right.getRight() != null) this.right.getRight().setParent(this);
+                this.right = this.right.getRight();
             } else if (this.right == null) {
                 this.val = this.left.getVal();
                 color = ((RedBlackNode<T>) this.left).black;
-                this.left.delete(this.val);
+                this.right = this.left.getRight();
+                if(this.left.getLeft() != null) this.left.getLeft().setParent(this);
+                if(this.left.getRight() != null) this.left.getRight().setParent(this);
+                this.left = this.left.getLeft();
             } else {
                 BSTNode<T> temp = this.getLeft();
                 while(temp.getRight() != null) {
