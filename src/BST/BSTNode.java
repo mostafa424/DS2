@@ -188,34 +188,79 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     /**
+     * Method to rotate node left, performing all necessary reference swaps.
+     */
+    public void rotateLeft() {
+        if (this.getParent().getParent() != null) {
+            if (this.getParent() == this.getParent().getParent().getLeft()) {
+                this.getParent().getParent().setLeft(this);
+            } else {
+                this.getParent().getParent().setRight(this);
+            }
+        }
+        this.getParent().setRight(this.getLeft());
+        if (this.getLeft() != null) {
+            this.getLeft().setParent(this.getParent());
+        }
+        this.setLeft(this.getParent());
+        BSTNode<T> temp = this.getParent().getParent();
+        this.getParent().setParent(this);
+        this.setParent(temp);
+    }
+
+    /**
+     * Method to rotate node right, performing all necessary reference swaps.
+     */
+    public void rotateRight() {
+        if (this.getParent().getParent() != null) {
+            if (this.getParent() == this.getParent().getParent().getLeft()) {
+                this.getParent().getParent().setLeft(this);
+            } else {
+                this.getParent().getParent().setRight(this);
+            }
+        }
+        this.getParent().setLeft(this.getRight());
+        if (this.getRight() != null) {
+            this.getRight().setParent(this.getParent());
+        }
+        this.setRight(this.getParent());
+        BSTNode<T> temp = this.getParent().getParent();
+        this.getParent().setParent(this);
+        this.setParent(temp);
+    }
+
+    /**
      * Method to insert value in tree rooted at node.
      * Template method with one hook defined immediately after insertion.
      *
      * @param obj value to be inserted in tree.
      */
-    public void insert(T obj) {
+    public boolean insert(T obj) {
+        boolean res = false;
         if(this.val == null) {
             this.val = obj;
             this.postInsertHook();
-            return;
+            return true;
         }
-        if(obj.compareTo(this.val) <= 0) {
+        if(this.val.compareTo(obj) == 0) return false;
+        if(obj.compareTo(this.val) < 0) {
             if(this.left != null) {
-                this.left.insert(obj);
+                res = this.left.insert(obj);
                 this.postInsertHook();
-                return;
+                return res;
             }
             this.left = this.factory.getNode(this, obj);
             this.postInsertHook();
-            return;
+            return true;
         }
         if(this.right != null) {
-            this.right.insert(obj);
+            res = this.right.insert(obj);
             this.postInsertHook();
-            return;
+            return res;
         }
         this.right = this.factory.getNode(this, obj);
         this.postInsertHook();
+        return true;
     }
 
     /**
@@ -231,7 +276,8 @@ public class BSTNode<T extends Comparable<T>> {
      *
      * @param obj value stored in node to delete from tree.
      */
-    public void delete(T obj) {
+    public boolean delete(T obj) {
+        boolean res = false;
         if(obj.compareTo(this.val) == 0){
             if(this.left == null && this.right == null) {
                 if(this.parent == null) {
@@ -243,28 +289,28 @@ public class BSTNode<T extends Comparable<T>> {
                         this.parent.right = null;
                     }
                 }
+                res = true;
             } else if (this.left == null) {
-                this.val = this.right.val;
-                this.right.parent = null;
-                this.right = null;
+                this.val = this.right.getVal();
+                res = this.right.delete(this.val);
             } else if (this.right == null) {
-                this.val = this.left.val;
-                this.left.parent = null;
-                this.left = null;
+                this.val = this.left.getVal();
+                res = this.left.delete(this.val);
             } else {
                 BSTNode<T> temp = this.left;
                 while(temp.right != null) {
                     temp = temp.right;
                 }
                 this.val = temp.val;
-                this.left.delete(this.val);
+                res = this.left.delete(this.val);
             }
         } else if (obj.compareTo(this.val) < 0) {
-            this.left.delete(obj);
+            if(this.left != null) res = this.left.delete(obj);
         } else {
-            this.right.delete(obj);
+            if(this.right != null) res = this.right.delete(obj);
         }
-        this.postDeleteHook();
+        if (res) this.postDeleteHook();
+        return res;
     }
 
     /**

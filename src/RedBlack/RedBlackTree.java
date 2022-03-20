@@ -74,13 +74,9 @@ public class RedBlackTree<T extends Comparable<T>> {
      * @return <code>boolean</code> value true if insert successful, false if already present.
      */
     public boolean insert(T obj) {
-        if(!this.root.contains(obj)){
-            this.root.insert(obj);
-            findRoot();
-            return true;
-        } else {
-            return false;
-        }
+        boolean res = this.root.insert(obj);
+        if (res) findRoot();
+        return res;
     }
 
     /**
@@ -90,12 +86,9 @@ public class RedBlackTree<T extends Comparable<T>> {
      * @return <code>boolean</code> value true if delete successful, false if not found.
      */
     public boolean delete(T obj) {
-        if(!this.root.contains(obj)){
-            return false;
-        }
-        this.root.delete(obj);
-        findRoot();
-        return true;
+        boolean res = this.root.delete(obj);
+        if (res) findRoot();
+        return res;
     }
 
     public boolean isEmpty() {

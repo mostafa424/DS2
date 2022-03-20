@@ -80,22 +80,23 @@ public class AVL<T extends Comparable<T>> {
      * Method to insert value
      *
      * @param obj value to insert into AVL tree.
+     * @return <code>boolean</code> value true if object not previously inserted, false if object already present.
      */
-    public void insert(T obj) {
-        this.root.insert(obj);
-        findRoot();
+    public boolean insert(T obj) {
+        boolean res = this.root.insert(obj);
+        if (res) findRoot();
+        return res;
     }
 
     /**
      * Method to delete value
      *
      * @param obj value of node to remove from AVL Tree.
+     * @return <code>boolean</code> value true if object found and deleted, false if no such object exists in tree.
      */
-    public void delete(T obj) {
-        if(!this.root.contains(obj)){
-            return;
-        }
-        this.root.delete(obj);
-        findRoot();
+    public boolean delete(T obj) {
+        boolean res = this.root.delete(obj);
+        if (res) findRoot();
+        return res;
     }
 }

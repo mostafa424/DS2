@@ -102,7 +102,7 @@ public class RedBlackDriver {
                 System.out.println("You are now comparing RedBlack and AVL trees");
                 RedBlackTree<String> test2 = new RedBlackTree<String>();
                 AVL<String> test3 = new AVL<String>();
-                int[] cases = {5,10,25,50,100,250,500};
+                int[] cases = {5,10,25,50,100,250,500,1000,2500,5000,10000,25000,50000,100000,250000,500000,1000000};
                 List<Long> avlDel = new ArrayList<Long>();
                 List<Long> avlIns = new ArrayList<Long>();
                 List<Long> rblDel = new ArrayList<Long>();
@@ -110,7 +110,7 @@ public class RedBlackDriver {
                 for(int i = 0; i < cases.length; i++) {
                     String[] strings = new String[cases[i]];
                     for(int j = 0; j < strings.length; j++) {
-                        strings[j] = generateRandomString(20);
+                        strings[j] = generateRandomString(50);
                     }
                     long timeBefore = System.nanoTime();
                     for(int j = 0; j < strings.length; j++) {
