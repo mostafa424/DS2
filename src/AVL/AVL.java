@@ -81,9 +81,10 @@ public class AVL<T extends Comparable<T>> {
      *
      * @param obj value to insert into AVL tree.
      */
-    public void insert(T obj) {
-        this.root.insert(obj);
-        findRoot();
+    public boolean insert(T obj) {
+        boolean res = this.root.insert(obj);
+        if (res) findRoot();
+        return res;
     }
 
     /**
@@ -91,11 +92,9 @@ public class AVL<T extends Comparable<T>> {
      *
      * @param obj value of node to remove from AVL Tree.
      */
-    public void delete(T obj) {
-        if(!this.root.contains(obj)){
-            return;
-        }
-        this.root.delete(obj);
-        findRoot();
+    public boolean delete(T obj) {
+        boolean res = this.root.delete(obj);
+        if (res) findRoot();
+        return res;
     }
 }

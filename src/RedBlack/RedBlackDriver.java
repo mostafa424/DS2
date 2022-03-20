@@ -102,7 +102,7 @@ public class RedBlackDriver {
                 System.out.println("You are now comparing RedBlack and AVL trees");
                 RedBlackTree<String> test2 = new RedBlackTree<String>();
                 AVL<String> test3 = new AVL<String>();
-                int[] cases = {5,10,25,50,100,250,500};
+                int[] cases = {5,10,25,50,100,250,500,1000,2500,5000,10000,25000,50000,100000,250000,500000,1000000};
                 List<Long> avlDel = new ArrayList<Long>();
                 List<Long> avlIns = new ArrayList<Long>();
                 List<Long> rblDel = new ArrayList<Long>();

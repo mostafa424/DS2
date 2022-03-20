@@ -76,8 +76,8 @@ public class BST<T extends Comparable<T>> {
      *
      * @param obj value to insert into BST.
      */
-    public void insert(T obj) {
-        this.root.insert(obj);
+    public boolean insert(T obj) {
+        return this.root.insert(obj);
     }
 
     /**
@@ -85,11 +85,9 @@ public class BST<T extends Comparable<T>> {
      *
      * @param obj value of node to remove from BST.
      */
-    public void delete(T obj) {
-        if(!this.root.contains(obj)){
-            return;
-        }
-        this.root.delete(obj);
+    public boolean delete(T obj) {
+        boolean res = this.root.delete(obj);
+        return res;
     }
 
 }
