@@ -9,7 +9,7 @@ import BST.BSTNode;
  */
 public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
     /**
-     * Colour state of node; 0->red, 1->black, 2->double black.
+     * Colour state of node; <code>true</code> if black, <code>false</code> if red.
      */
     protected boolean black;
 
@@ -36,16 +36,33 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         this.factory = new RedBlackNodeFactory<T>();
     }
 
+    /**
+     * Constructor which initializes node with parent reference, value, and color.
+     *
+     * @param parent Node parent reference.
+     * @param val    value to be stored in node.
+     * @param color <code>boolean</code> value indicating black if true, red if false.
+     */
     public RedBlackNode(RedBlackNode<T> parent, T val, boolean color) {
         super(parent, val);
         this.black = color;
         this.factory = new RedBlackNodeFactory<T>();
     }
 
+    /**
+     * Black property getter.
+     *
+     * @return <code>boolean</code> value indicating node is black if true, red if false.
+     */
     public boolean getBlack() {
         return black;
     }
 
+    /**
+     * Black property setter.
+     *
+     * @param black <code>boolean</code> value to override node color with.
+     */
     public void setBlack(boolean black) {
         this.black = black;
     }
@@ -53,6 +70,9 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
     /**
      * Overridden insert.
      * Rebalances the tree rooted at node if black height is not proper.
+     *
+     * @param obj object to be inserted into tree.
+     * @return <code>boolean</code> value true if object was not already present, false if object was already inserted.
      */
     @Override
     public boolean insert(T obj) {
@@ -142,6 +162,13 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         }
     }
 
+    /**
+     * Overridden delete.
+     * Rebalances the tree rooted at node if black height is not proper.
+     *
+     * @param obj value stored in node to delete from tree.
+     * @return <code>boolean</code> value true if object found and deleted, false if object not found.
+     */
     @Override
     public boolean delete(T obj){
         boolean res = false;
@@ -182,6 +209,9 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
         return res;
     }
 
+    /**
+     * Method to fix coloring of nodes in tree in which a value was deleted.
+     */
     public void deleteFixup(){
         if(this.parent == null) {
             return;
@@ -244,6 +274,13 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
             }
         }
     }
+
+    /**
+     * Method to swap color of two nodes.
+     *
+     * @param node1 first node to swap color of
+     * @param node2 second node to swap color of
+     */
     private void swapColors(RedBlackNode<T> node1,RedBlackNode<T> node2){
         boolean tmp = node2.black;
         node2.black = node1.black;

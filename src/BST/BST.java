@@ -75,6 +75,7 @@ public class BST<T extends Comparable<T>> {
      * Method to insert value
      *
      * @param obj value to insert into BST.
+     * @return <code>boolean</code> value true if object not previously inserted, false if object already present.
      */
     public boolean insert(T obj) {
         return this.root.insert(obj);
@@ -84,6 +85,7 @@ public class BST<T extends Comparable<T>> {
      * Method to delete value
      *
      * @param obj value of node to remove from BST.
+     * @return <code>boolean</code> value true if object found and deleted, false if no such object exists in tree.
      */
     public boolean delete(T obj) {
         boolean res = this.root.delete(obj);

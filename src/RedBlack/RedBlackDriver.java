@@ -110,7 +110,7 @@ public class RedBlackDriver {
                 for(int i = 0; i < cases.length; i++) {
                     String[] strings = new String[cases[i]];
                     for(int j = 0; j < strings.length; j++) {
-                        strings[j] = generateRandomString(20);
+                        strings[j] = generateRandomString(50);
                     }
                     long timeBefore = System.nanoTime();
                     for(int j = 0; j < strings.length; j++) {
