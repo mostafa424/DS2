@@ -2,28 +2,21 @@ package RedBlack;
 
 import AVL.AVL;
 
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class RedBlackDriver {
     public void test(){
         RedBlackTree<Integer> redBlackTree = new RedBlackTree<>();
-        redBlackTree.insert(10);
-        redBlackTree.insert(5);
-        redBlackTree.insert(1);
-        redBlackTree.insert(7);
-        redBlackTree.insert(30);
-        redBlackTree.insert(25);
-        redBlackTree.insert(40);
-        redBlackTree.insert(28);
-        redBlackTree.delete(7);
-        redBlackTree.delete(30);
-        redBlackTree.delete(10);
-        redBlackTree.delete(5);
-        redBlackTree.delete(1);
-        redBlackTree.delete(25);
-        redBlackTree.delete(28);
-        redBlackTree.delete(40);
+        int[] randomnumbers = new int[100];
+        for(int i=0;i<25;i++){
+            randomnumbers[i]=new Random().nextInt(100);
+        }
+        for(int i=0;i<25;i++){
+            redBlackTree.insert(randomnumbers[i]);
+        }
+        for(int i=0;i<25;i++){
+            redBlackTree.delete(randomnumbers[i]);
+        }
         traverse(redBlackTree.getRoot());
     }
 
@@ -102,7 +95,7 @@ public class RedBlackDriver {
                 System.out.println("You are now comparing RedBlack and AVL trees");
                 RedBlackTree<String> test2 = new RedBlackTree<String>();
                 AVL<String> test3 = new AVL<String>();
-                int[] cases = {5,10,25,50,100,250,500};
+                int[] cases = {5,10,25,50,100,250,500,1000};
                 List<Long> avlDel = new ArrayList<Long>();
                 List<Long> avlIns = new ArrayList<Long>();
                 List<Long> rblDel = new ArrayList<Long>();
