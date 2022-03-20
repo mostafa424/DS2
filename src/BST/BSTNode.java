@@ -188,6 +188,48 @@ public class BSTNode<T extends Comparable<T>> {
     }
 
     /**
+     * Method to rotate node left, performing all necessary reference swaps.
+     */
+    public void rotateLeft() {
+        if (this.getParent().getParent() != null) {
+            if (this.getParent() == this.getParent().getParent().getLeft()) {
+                this.getParent().getParent().setLeft(this);
+            } else {
+                this.getParent().getParent().setRight(this);
+            }
+        }
+        this.getParent().setRight(this.getLeft());
+        if (this.getLeft() != null) {
+            this.getLeft().setParent(this.getParent());
+        }
+        this.setLeft(this.getParent());
+        BSTNode<T> temp = this.getParent().getParent();
+        this.getParent().setParent(this);
+        this.setParent(temp);
+    }
+
+    /**
+     * Method to rotate node right, performing all necessary reference swaps.
+     */
+    public void rotateRight() {
+        if (this.getParent().getParent() != null) {
+            if (this.getParent() == this.getParent().getParent().getLeft()) {
+                this.getParent().getParent().setLeft(this);
+            } else {
+                this.getParent().getParent().setRight(this);
+            }
+        }
+        this.getParent().setLeft(this.getRight());
+        if (this.getRight() != null) {
+            this.getRight().setParent(this.getParent());
+        }
+        this.setRight(this.getParent());
+        BSTNode<T> temp = this.getParent().getParent();
+        this.getParent().setParent(this);
+        this.setParent(temp);
+    }
+
+    /**
      * Method to insert value in tree rooted at node.
      * Template method with one hook defined immediately after insertion.
      *

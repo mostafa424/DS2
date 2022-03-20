@@ -31,54 +31,6 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
     }
 
     /**
-     * Method to rotate node left, performing all necessary reference swaps.
-     *
-     * @param node Node to be rotated left
-     * @param <T> type of data stored in node.
-     */
-    private static <T extends Comparable<T>> void rotateLeft(BSTNode<T> node) {
-        if(node.getParent().getParent() != null) {
-            if(node.getParent() == node.getParent().getParent().getLeft()) {
-                node.getParent().getParent().setLeft(node);
-            } else {
-                node.getParent().getParent().setRight(node);
-            }
-        }
-        node.getParent().setRight(node.getLeft());
-        if(node.getLeft() != null) {
-            node.getLeft().setParent(node.getParent());
-        }
-        node.setLeft(node.getParent());
-        BSTNode<T> temp = node.getParent().getParent();
-        node.getParent().setParent(node);
-        node.setParent(temp);
-    }
-
-    /**
-     * Method to rotate node right, performing all necessary reference swaps.
-     *
-     * @param node Node to be rotated right
-     * @param <T> type of data stored in node.
-     */
-    private static <T extends Comparable<T>> void rotateRight(BSTNode<T> node) {
-        if(node.getParent().getParent() != null) {
-            if(node.getParent() == node.getParent().getParent().getLeft()) {
-                node.getParent().getParent().setLeft(node);
-            } else {
-                node.getParent().getParent().setRight(node);
-            }
-        }
-        node.getParent().setLeft(node.getRight());
-        if(node.getRight() != null) {
-            node.getRight().setParent(node.getParent());
-        }
-        node.setRight(node.getParent());
-        BSTNode<T> temp = node.getParent().getParent();
-        node.getParent().setParent(node);
-        node.setParent(temp);
-    }
-
-    /**
      * Method to calculate balance factor of a node based on children's heights.
      *
      * @param node Node to calculate balance factor for.
@@ -108,13 +60,13 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
             int leftBal = calcBalance(this.left);
             //Left-left insertion
             if(leftBal == 1 || leftBal == 0) {
-                rotateRight(this.left);
+                this.left.rotateRight();
                 this.calcHeight();
                 this.parent.calcHeight();
             //Left-right insertion
             } else if(leftBal == -1) {
-                rotateLeft(this.left.getRight());
-                rotateRight(this.left);
+                this.left.getRight().rotateLeft();
+                this.left.rotateRight();
                 this.calcHeight();
                 this.parent.getLeft().calcHeight();
                 this.parent.calcHeight();
@@ -123,13 +75,13 @@ public class AVLNode<T extends Comparable<T>> extends BSTNode<T> {
             int rightBal = calcBalance(this.right);
             //Right-right insertion
             if(rightBal == -1 || rightBal == 0) {
-                rotateLeft(this.right);
+                this.right.rotateLeft();
                 this.calcHeight();
                 this.parent.calcHeight();
             //Right-left insertion
             } else if(rightBal == 1) {
-                rotateRight(this.right.getLeft());
-                rotateLeft(this.right);
+                this.right.getLeft().rotateRight();
+                this.right.rotateLeft();
                 this.calcHeight();
                 this.parent.getRight().calcHeight();
                 this.parent.calcHeight();
