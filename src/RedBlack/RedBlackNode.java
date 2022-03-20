@@ -172,6 +172,7 @@ public class RedBlackNode<T extends Comparable<T>> extends BSTNode<T> {
     @Override
     public boolean delete(T obj){
         boolean res = false;
+        if(this.val == null) return false;
         if(obj.compareTo(this.val) == 0){
             if(this.left == null && this.right == null) {
                 if(this.parent == null) {

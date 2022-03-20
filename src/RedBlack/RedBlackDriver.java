@@ -82,10 +82,13 @@ public class RedBlackDriver {
                             break;
                         case 4:
                             System.out.println(test.getRoot());
+                            break;
                         case 5:
                             System.out.println(test.isEmpty());
+                            break;
                         case 6:
                             test.clear();
+                            break;
                         case 7:
                             System.out.print("Enter search number: ");
                             int contain = sc.nextInt();
