@@ -92,7 +92,9 @@ public class AVLDriverCode {
                             String d_path=sc.next();
                             test2.batchDel(d_path);
                             break;
-                        case 6: System.out.println(test2.getSize());
+                        case 6:
+                            System.out.println(test2.getSize());
+                            break;
                     }
                     if(option == 7){System.out.println("Exiting....");break;}
                 }
