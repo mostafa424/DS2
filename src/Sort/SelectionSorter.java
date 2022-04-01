@@ -3,6 +3,13 @@ package Sort;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implementation of a sorter object that sorts based on selection sort algorithm.
+ * O(N^2) time complexity.
+ *
+ * @param <K> type parameter: defines data type that the sorter operates on.
+ *           Must implement <code>Comparable</code> interface.
+ */
 public class SelectionSorter<K extends Comparable<K>> implements Sorter<K> {
     @Override
     public void sort(List<K> elements) {

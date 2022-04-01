@@ -2,10 +2,23 @@ package Pair;
 
 import java.util.Objects;
 
+/**
+ * Implementation of a pair data structure, used to store two related values together.
+ * Pairs with same values but different order of assignment are NOT equal.
+ *
+ * @param <T> type parameter of first value.
+ * @param <V> type parameter of second value.
+ */
 public class Pair<T, V> {
     T first;
     V second;
 
+    /**
+     * Constructor, initializes a pair storing two values.
+     *
+     * @param first first value
+     * @param second second value
+     */
     public Pair(T first, V second) {
         this.first = first;
         this.second = second;
