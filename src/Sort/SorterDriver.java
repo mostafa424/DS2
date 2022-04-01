@@ -13,8 +13,7 @@ public class SorterDriver {
         MergeSort mergeSort = new MergeSort();
         QuickSort quickSort = new QuickSort();
         SelectionSort selectionSort = new SelectionSort();
-
-        int[] cases = {5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000};
+        int[] cases = {5, 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000, 25000, 50000, 75000, 100000};
         List<Long> heapTime = new ArrayList<Long>();
         List<Long> bubbleTime = new ArrayList<Long>();
         List<Long> insertionTime = new ArrayList<Long>();
@@ -23,45 +22,47 @@ public class SorterDriver {
         List<Long> selectionTime = new ArrayList<Long>();
         Random random = new Random();
         for (int i = 0; i < cases.length; i++) {
-            List<Integer> heapArray = new ArrayList<>();
-            List<Integer> bubbleArray = new ArrayList<>();
+            Integer[] heapArray = new Integer[cases[i]];
+            Integer[] bubbleArray = new Integer[cases[i]];
             int[] insertionArray = new int[cases[i]];
             int[] mergeArray = new int[cases[i]];
             int[] quickArray = new int[cases[i]];
             int[] selectionArray = new int[cases[i]];
             for (int j = 0; j < cases[i]; j++) {
-                heapArray.add(random.nextInt(1000));
+                heapArray[j] = random.nextInt(cases[i] * 10);
             }
             for (int j = 0; j < cases[i]; j++) {
-                bubbleArray.add(heapArray.get(i));
-                insertionArray[i] = heapArray.get(i);
-                mergeArray[i] = heapArray.get(i);
-                quickArray[i] = heapArray.get(i);
-                selectionArray[i] = heapArray.get(i);
+                bubbleArray[j] = heapArray[j];
+                insertionArray[j] = heapArray[j];
+                mergeArray[j] = heapArray[j];
+                quickArray[j] = heapArray[j];
+                selectionArray[j] = heapArray[j];
             }
-            long timeBefore = System.nanoTime();
+            long timeBefore;
+            long timeAfter;
+            timeBefore = System.nanoTime();
             heapSorter.sort(heapArray);
-            long timeAfter = System.nanoTime();
+            timeAfter = System.nanoTime();
             heapTime.add(timeAfter - timeBefore);
-
+            timeBefore = System.nanoTime();
             bubbleSorter.sort(bubbleArray);
-
+            timeAfter = System.nanoTime();
             bubbleTime.add(timeAfter - timeBefore);
-
+            timeBefore = System.nanoTime();
             insertionSort.sort(insertionArray);
-
+            timeAfter = System.nanoTime();
             insertionTime.add(timeAfter - timeBefore);
-
+            timeBefore = System.nanoTime();
             selectionSort.sort(selectionArray);
-
+            timeAfter = System.nanoTime();
             selectionTime.add(timeAfter - timeBefore);
-
+            timeBefore = System.nanoTime();
             mergeSort.sort(mergeArray, 0, mergeArray.length - 1);
-
+            timeAfter = System.nanoTime();
             mergeTime.add(timeAfter - timeBefore);
-
+            timeBefore = System.nanoTime();
             quickSort.quickSort(quickArray, 0, quickArray.length - 1);
-
+            timeAfter = System.nanoTime();
             quickTime.add(timeAfter - timeBefore);
         }
             System.out.println("Data For HeapSort:");
