@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Implementation of a sorter object that sorts based on quick sort algorithm.
- * O(N * lg(N)) time complexity.
+ * O(N * lg(N)) average time complexity.
  * Picks pivot based on median of start-mid-end.
  *
  * @param <K> type parameter: defines data type that the sorter operates on.
