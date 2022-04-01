@@ -3,8 +3,24 @@ package Sort;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implementation of a sorter object that sorts based on quick sort algorithm.
+ * O(N * lg(N)) time complexity.
+ * Picks pivot based on median of start-mid-end.
+ *
+ * @param <K> type parameter: defines data type that the sorter operates on.
+ *           Must implement <code>Comparable</code> interface.
+ */
 public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
 
+    /**
+     * Method that calculates median value of three elements.
+     *
+     * @param element1 first element
+     * @param element2 second element
+     * @param element3 third element
+     * @return median element
+     */
     private K medianOfThree(K element1, K element2, K element3) {
         if(element1.compareTo(element3) <= 0) {
             if(element1.compareTo(element2) > 0) {
@@ -25,6 +41,14 @@ public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
         }
     }
 
+    /**
+     * Method that returns quick sort pivot of <code>List</code> of elements.
+     *
+     * @param elements <code>List</code> of elements to get pivot from.
+     * @param start starting index of element <code>List</code>.
+     * @param end ending index of element <code>List</code>.
+     * @return element which is to act as pivot for quick sort operation.
+     */
     private K getPivot(List<K> elements, int start, int end) {
         int mid = (start + end)/2;
         K startElement = elements.get(start);
@@ -33,6 +57,14 @@ public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
         return medianOfThree(startElement, midElement, endElement);
     }
 
+    /**
+     * Method that returns quick sort pivot of array of elements.
+     *
+     * @param elements array of elements to get pivot from.
+     * @param start starting index of element array.
+     * @param end ending index of element array.
+     * @return element which is to act as pivot for quick sort operation.
+     */
     private K getPivot(K[] elements, int start, int end) {
         int mid = (start + end)/2;
         K startElement = elements[start];
@@ -41,8 +73,16 @@ public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
         return medianOfThree(startElement, midElement, endElement);
     }
 
+    /**
+     * Method to split <code>List</code> based on its pivot, returns index of sorted pivot.
+     *
+     * @param elements <code>List</code> of elements to partition.
+     * @param start starting index of <code>List</code>
+     * @param end ending index of <code>List</code>
+     * @return index of sorted pivot.
+     */
     private int partition(List<K> elements, int start, int end) {
-        K pivot = elements.get(end);
+        K pivot = this.getPivot(elements, start, end);
         int i = (start - 1);
         for(int j = start; j <= end - 1; j++){
             if (elements.get(j).compareTo(pivot) < 0){
@@ -54,8 +94,16 @@ public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
         return (i + 1);
     }
 
+    /**
+     * Method to split array based on its pivot, returns index of sorted pivot.
+     *
+     * @param elements array of elements to partition.
+     * @param start starting index of array
+     * @param end ending index of array
+     * @return index of sorted pivot.
+     */
     private int partition(K[] elements, int start, int end) {
-        K pivot = elements[end];
+        K pivot = this.getPivot(elements, start, end);
         int i = (start - 1);
         for(int j = start; j <= end - 1; j++){
             if (elements[j].compareTo(pivot) < 0){
@@ -71,7 +119,14 @@ public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
         return (i + 1);
     }
 
-     private void quickSort(List<K> elements, int start, int end) {
+    /**
+     * Method to recursively partition and sort a <code>List</code>
+     *
+     * @param elements <code>List</code> of elements to sort.
+     * @param start starting index of <code>List</code>
+     * @param end ending index of <code>List</code>
+     */
+    private void quickSort(List<K> elements, int start, int end) {
         if (start < end){
             int pivot = partition(elements, start, end);
             quickSort(elements, start, pivot - 1);
@@ -79,6 +134,13 @@ public class QuickSorter<K extends Comparable<K>> implements Sorter<K> {
         }
     }
 
+    /**
+     * Method to recursively partition and sort an array
+     *
+     * @param elements array of elements to sort.
+     * @param start starting index of array
+     * @param end ending index of array
+     */
     private void quickSort(K[] elements, int start, int end) {
         if (start < end){
             int pivot = partition(elements, start, end);

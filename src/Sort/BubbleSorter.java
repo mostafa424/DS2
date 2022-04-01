@@ -3,6 +3,15 @@ package Sort;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implementation of a sorter object that sorts based on bubble sort algorithm.
+ * O(N^2) time complexity.
+ * Slightly optimized using a boolean flag such that the algorithm terminates if
+ * it does a pass without swapping anything.
+ *
+ * @param <K> type parameter: defines data type that the sorter operates on.
+ *           Must implement <code>Comparable</code> interface.
+ */
 public class BubbleSorter<K extends Comparable<K>> implements Sorter<K> {
 
     @Override
